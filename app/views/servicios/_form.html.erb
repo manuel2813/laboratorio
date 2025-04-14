@@ -1,0 +1,52 @@
+<%= form_with(model: servicio, local: true, html: { multipart: true }) do |form| %>
+  <% if servicio.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(servicio.errors.count, "error") %> no permitieron guardar el servicio:</h2>
+      <ul>
+        <% servicio.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :codigo_servicio %>
+    <%= form.text_field :codigo_servicio %>
+  </div>
+
+  <div>
+    <%= form.label :nombre %>
+    <%= form.text_field :nombre %>
+  </div>
+
+  <div>
+    <%= form.label :descripcion %>
+    <%= form.text_area :descripcion %>
+  </div>
+
+  <div>
+    <%= form.label :costo_base %>
+    <%= form.text_field :costo_base %>
+  </div>
+
+  <div>
+    <%= form.label :laboratorista_id %>
+    <%= form.number_field :laboratorista_id %>
+  </div>
+
+  <div>
+    <%= form.label :imagen_archivo, "Subir imagen desde tu PC" %>
+    <%= form.file_field :imagen_archivo, direct_upload: true %>
+    <% if servicio.imagen_archivo.attached? %>
+      <div style="margin-top: 10px;">
+        <strong>Imagen actual:</strong><br>
+        <%= image_tag servicio.imagen_archivo.variant(resize_to_limit: [200, 150]) %>
+      </div>
+    <% end %>
+  </div>
+
+  <div style="margin-top: 20px;">
+    <%= form.submit "Guardar", class: "btn btn-primary" %>
+  </div>
+<% end %>

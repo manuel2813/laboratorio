@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Laboratorio Central de Investigación de la UNAS</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbo-track': 'reload' %>
+  <!-- Incluye la fuente Newsreader -->
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin-top: 650px;
+      font-family: 'Newsreader', serif;
+      background-color: #f9f9f9;
+      text-align: center;
+    }
+
+    .full-screen {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      min-height: 100vh; /* Cambiado a min-height */
+      padding: 20px;
+      box-sizing: border-box;
+      background-color: #ffffff; /* Fondo blanco */
+    }
+
+    .title {
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #4a4a4a;
+    }
+
+    .description {
+      font-size: 18px;
+      color: #555;
+      line-height: 1.8;
+      max-width: 80%; /* Ajusta el ancho del texto */
+      margin: 0 auto 30px auto;
+    }
+
+    .image-container img {
+      max-width: 805px; /* Ancho máximo de 805px */
+      max-height: 460px; /* Altura máxima de 460px */
+      width: auto; /* Ajusta el ancho según la altura */
+      height: auto; /* Ajusta la altura según el ancho */
+    }
+
+    /* Sección de Misión y Visión */
+    .mission-vision-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0;
+      padding: 40px 20px;
+      background-color: #f9f9f9; /* Fondo global */
+    }
+
+    .mission, .vision {
+      flex: 1;
+      padding: 40px;
+      color: #2d2d2d;
+      font-size: 16px;
+      line-height: 1.8;
+      text-align: center;
+    }
+
+    .mission {
+      background-color: #ABC198; /* Color de fondo para Misión */
+    }
+
+    .vision {
+      background-color: #B8CAAD; /* Color de fondo para Visión */
+    }
+
+    .mission h2, .vision h2 {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      color: #2d2d2d; /* Color del texto */
+    }
+
+    /* Estilos para la sección de tutoriales */
+    .tutorials-section {
+      padding: 40px 20px;
+      background-color: #f0f8f0;
+      text-align: center;
+    }
+
+    .tutorials-button {
+      display: inline-block;
+      background-color: #4C9368;
+      color: white;
+      padding: 10px 20px;
+      font-size: 20px;
+      font-weight: bold;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+
+    .tutorials-container {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 20px;
+      justify-items: center;
+      align-items: center;
+    }
+
+    .card {
+      background-color: #80B395;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .poster img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .video-frame {
+      width: 100%;
+      max-width: 600px;
+      height: 350px;
+      border: none;
+      border-radius: 10px;
+    }
+
+    .tutorial-bottom {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 30px;
+    }
+
+    .tutorial-bottom iframe {
+      width: 300px;
+      height: 200px;
+      border: none;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Componente Principal -->
+  <div class="full-screen">
+    <h1 class="title">Laboratorio Central de Investigación de la UNAS</h1>
+    <p class="description">
+      Institución dedicada a la excelencia en el análisis y gestión de muestras. Nuestro laboratorio está comprometido con la calidad
+      y precisión en los servicios que ofrecemos a nuestros clientes, que incluyen tesistas, bachilleres, estudiantes, y el público
+      en general. Nos enorgullecemos de utilizar metodologías avanzadas y mantener altos estándares en todas nuestras operaciones
+      para asegurar resultados confiables y eficientes.
+    </p>
+    <div class="image-container">
+      <img src="<%= asset_path('universidad.svg') %>" alt="Universidad">
+    </div>
+  </div>
+
+  <!-- Sección de Misión y Visión -->
+  <div class="mission-vision-section">
+    <div class="mission">
+      <h2>MISIÓN</h2>
+      <p>
+        Contribuir al avance del conocimiento científico y tecnológico, apoyando a nuestros clientes en sus proyectos
+        de investigación y desarrollo con resultados de alta calidad.
+      </p>
+    </div>
+    <div class="vision">
+      <h2>VISIÓN</h2>
+      <p>
+        Ser un referente en la gestión y análisis de muestras, impulsando el progreso científico y contribuyendo al desarrollo
+        sostenible a través de prácticas responsables y eficientes.
+      </p>
+    </div>
+  </div>
+
+  <!-- Sección de Tutoriales -->
+  <div class="tutorials-section">
+    <button class="tutorials-button">Tutoriales</button>
+    <div class="tutorials-container">
+      <!-- Afiche -->
+      <div class="card">
+        <img src="<%= asset_path('afiche.svg') %>" alt="Afiche" class="poster">
+        <button class="tutorials-button" style="margin-top: 10px;">Descarga</button>
+      </div>
+      <!-- Primer video -->
+      <div class="card">
+        <iframe
+          class="video-frame"
+          src="https://www.youtube.com/embed/EO-DwfAp3rI"
+          title="Tutorial 1"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+    <div class="tutorial-bottom">
+      <!-- Segundo video -->
+      <iframe
+        src="https://www.youtube.com/embed/2AnDrDXMnbo"
+        title="Tutorial 2"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+</body>
+</html>

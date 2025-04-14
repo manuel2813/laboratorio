@@ -1,0 +1,34 @@
+<p style="color: green"><%= notice %></p>
+
+<h1 style="text-align: center; color: #2f4f4f;">Servicios</h1>
+
+<div id="servicios" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 20px;">
+  <% @servicios.each do |servicio| %>
+    <div style="width: 300px; background-color: #e7f5e9; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); overflow: hidden; transition: transform 0.2s ease;">
+      
+      <%= link_to servicio_path(servicio), style: "text-decoration: none;" do %>
+        <% if servicio.imagen_archivo.attached? %>
+          <%= image_tag servicio.imagen_archivo.variant(resize_to_limit: [300, 200]), style: "width: 100%; height: 200px; object-fit: cover;" %>
+        <% else %>
+          <%= image_tag "placeholder.jpg", style: "width: 100%; height: 200px; object-fit: cover;" %>
+        <% end %>
+        <div style="padding: 15px;">
+          <h3 style="color: #50A371; font-size: 1.5rem; margin-bottom: 10px;"><%= servicio.nombre.upcase %></h3>
+        </div>
+      <% end %>
+
+      <% if current_user&.gerente? %>
+        <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 15px;">
+          <%= link_to "Editar", edit_servicio_path(servicio), class: "btn btn-warning", style: "padding: 5px 10px; background-color: #ffc107; color: black; text-decoration: none; border-radius: 5px;" %>
+          <%= link_to "Eliminar", servicio_path(servicio), method: :delete, data: { confirm: "¿Estás seguro de que quieres eliminar este servicio?" }, class: "btn btn-danger", style: "padding: 5px 10px; background-color: #dc3545; color: white; text-decoration: none; border-radius: 5px;" %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<% if current_user&.gerente? %>
+  <div style="text-align: center; margin-top: 20px;">
+    <%= link_to "Nuevo Servicio", new_servicio_path, class: "btn btn-primary", style: "background-color: #50A371; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-size: 1.2rem;" %>
+  </div>
+<% end %>

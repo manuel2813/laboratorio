@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Selección de Usuario</title>
+  <style>
+    body {
+      font-family: 'Newsreader', serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: rgba(255, 255, 255, 0);
+      color: #2f4f4f;
+    }
+
+    .main-container {
+      text-align: center;
+      margin-top: 10px; /* Ajusta este valor para controlar la posición */
+    }
+
+    .main-container h1 {
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+      color: #50A371;
+    }
+
+    .role-container {
+      display: flex;
+      justify-content: center;
+      gap: 50px;
+    }
+
+    .role-card {
+      background-color: rgb(255, 255, 255);
+      border-radius: 10px;
+      width: 180px;
+      height: 180px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      color: white;
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .role-card:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .role-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .role-description {
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-top: 10px;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  <div class="main-container">
+    <h1>Selección de Usuario Ingreso</h1>
+    <div class="role-container">
+      <div>
+        <a href="<%= select_role_path(role: 'admin') %>" class="role-card">
+          <img src="/assets/manager_icon.png" alt="Gerente">
+        </a>
+        <div class="role-description">GERENTE</div>
+      </div>
+      <div>
+        <a href="<%= select_role_path(role: 'laboratorista') %>" class="role-card">
+          <img src="/assets/laboratorista_icon.png" alt="Laboratorista">
+        </a>
+        <div class="role-description">LABORATORISTAS</div>
+      </div>
+      <div>
+      <a href="<%= login_client_path %>" class="role-card">
+        <img src="/assets/client_icon.png" alt="Cliente">
+      </a>
+      <div class="role-description">CLIENTE</div>
+    </div>
+    </div>
+  </div>
+</body>
+</html>

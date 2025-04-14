@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Laboratorio Central de la UNAS</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbo-track': 'reload' %>
+  <style>
+    /* Estilos generales */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background-color: #50A371; /* Nuevo color de fondo */
+      color: white;
+      z-index: 1000;
+      padding: 10px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-logo img {
+      height: 50px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .nav-links a {
+      color: black; /* Letra negra */
+      text-decoration: none;
+      font-size: 18px;
+    }
+
+    .nav-links a:hover {
+      text-decoration: underline;
+    }
+
+    .btn-login {
+      color: black; /* Letra negra */
+      padding: 5px 15px;
+      text-decoration: none;
+      font-size: 18px;
+      border: none;
+      background: transparent; /* Fondo transparente */
+    }
+
+    .btn-login:hover {
+      color: #f2f2f2;
+    }
+
+    .nav-social {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .nav-social img {
+      width: 35px;
+      height: 35px;
+    }
+
+    .nav-social img:hover {
+      opacity: 0.8; /* Efecto hover sin fondo */
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <!-- Barra de navegación fija -->
+  <nav>
+    <div class="nav-container">
+      <!-- Logo -->
+      <div class="nav-logo">
+        <img src="<%= asset_path('logo.svg') %>" alt="Logo">
+      </div>
+
+      <!-- Enlaces de navegación -->
+      <div class="nav-links">
+        <a href="/">Inicio</a>
+        <a href="/tutoriales">Tutoriales</a>
+        <a href="/servicios">Servicios</a>
+        <% if user_signed_in? %>
+         <!-- <%= link_to "Cerrar sesión", destroy_user_session_path, method: :delete, class: "btn-login" %>-->
+          <%= link_to 'Cerrar sesión', destroy_user_session_path, method: :delete, class: 'btn btn-logout' %>
+
+        <% else %>
+          <%= link_to "Ingresar", select_role_path, class: "btn-login" %>
+        <% end %>
+      </div>
+
+      <!-- Redes sociales -->
+      <div class="nav-social">
+        <img src="<%= asset_path('instagram.svg') %>" alt="Instagram">
+        <img src="<%= asset_path('facebook.svg') %>" alt="Facebook">
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contenido principal -->
+  <div style="padding-top: 100px;">
+    <%= yield %>
+  </div>
+</body>
+</html>

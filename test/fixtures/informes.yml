@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  codigo_solicitud: MyString
+  laboratorista_id: 1
+  gerente_id: 1
+  fecha_generacion: 2024-12-28 09:24:52
+  fecha_firma_gerente: 2024-12-28 09:24:52
+  fecha_envio_cliente: 2024-12-28 09:24:52
+  archivo: MyString
+  estado: MyString
+
+two:
+  codigo_solicitud: MyString
+  laboratorista_id: 1
+  gerente_id: 1
+  fecha_generacion: 2024-12-28 09:24:52
+  fecha_firma_gerente: 2024-12-28 09:24:52
+  fecha_envio_cliente: 2024-12-28 09:24:52
+  archivo: MyString
+  estado: MyString

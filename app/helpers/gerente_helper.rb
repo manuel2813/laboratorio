@@ -1,0 +1,2 @@
+module GerenteHelper
+end

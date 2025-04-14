@@ -1,0 +1,35 @@
+<p style="color: green; text-align: center; font-size: 1.2rem;"><%= notice %></p>
+
+<div style="max-width: 800px; margin: auto; padding: 20px; font-family: 'Newsreader', serif; text-align: center;">
+
+  <!-- Título del servicio -->
+  <h1 style="font-size: 3rem; color: #2f4f4f; margin-bottom: 300px;"><%= @servicio.nombre.upcase %></h1>
+
+  <!-- Descripción del servicio -->
+  <p style="font-size: 1.2rem; color: #555; line-height: 1.6; background-color: #f7f7f7; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+    <%= @servicio.descripcion %>
+  </p>
+
+  <!-- Detalles del servicio -->
+  <div style="margin-top: 30px; text-align: left; background-color: #e7f5e9; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <h2 style="font-size: 2rem; color: #50A371; margin-bottom: 15px;">Detalles del Servicio</h2>
+    <ul style="list-style: none; padding: 0; font-size: 1.2rem; color: #333;">
+    
+      <li><strong>Costo Base:</strong> S/ <%= @servicio.costo_base %></li>
+      <li><strong>Laboratorista:</strong> 
+        <%= @servicio.laboratorista_id.present? ? "ID: #{@servicio.laboratorista_id}" : "No asignado" %>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Imagen estática del servicio -->
+  <div style="margin: 20px 0;">
+    <img src="/assets/static_service_image.png" alt="<%= @servicio.nombre %>" style="max-width: 100%; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+  </div>
+
+  <!-- Botones de acción -->
+  <div style="margin-top: 20px;">
+    <%= link_to "Editar Servicio", edit_servicio_path(@servicio), style: "background-color: #50A371; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-size: 1rem; margin-right: 10px;" %>
+    <%= link_to "Volver a Servicios", servicios_path, style: "background-color: #2f4f4f; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-size: 1rem;" %>
+  </div>
+</div>

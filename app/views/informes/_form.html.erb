@@ -1,0 +1,57 @@
+<%= form_with(model: informe) do |form| %>
+  <% if informe.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(informe.errors.count, "error") %> prohibited this informe from being saved:</h2>
+
+      <ul>
+        <% informe.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :codigo_solicitud, style: "display: block" %>
+    <%= form.text_field :codigo_solicitud %>
+  </div>
+
+  <div>
+    <%= form.label :laboratorista_id, style: "display: block" %>
+    <%= form.number_field :laboratorista_id %>
+  </div>
+
+  <div>
+    <%= form.label :gerente_id, style: "display: block" %>
+    <%= form.number_field :gerente_id %>
+  </div>
+
+  <div>
+    <%= form.label :fecha_generacion, style: "display: block" %>
+    <%= form.datetime_field :fecha_generacion %>
+  </div>
+
+  <div>
+    <%= form.label :fecha_firma_gerente, style: "display: block" %>
+    <%= form.datetime_field :fecha_firma_gerente %>
+  </div>
+
+  <div>
+    <%= form.label :fecha_envio_cliente, style: "display: block" %>
+    <%= form.datetime_field :fecha_envio_cliente %>
+  </div>
+
+  <div>
+    <%= form.label :archivo, style: "display: block" %>
+    <%= form.text_field :archivo %>
+  </div>
+
+  <div>
+    <%= form.label :estado, style: "display: block" %>
+    <%= form.text_field :estado %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

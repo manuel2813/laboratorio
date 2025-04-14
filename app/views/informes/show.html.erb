@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @informe %>
+
+<div>
+  <%= link_to "Edit this informe", edit_informe_path(@informe) %> |
+  <%= link_to "Back to informes", informes_path %>
+
+  <%= button_to "Destroy this informe", @informe, method: :delete %>
+</div>

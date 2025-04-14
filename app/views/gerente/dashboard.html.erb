@@ -1,0 +1,33 @@
+<h1 style="text-align: center; color: #2f4f4f; font-size: 2.5rem; margin-top: 40px;">
+  🧪 Panel de Control del Gerente
+</h1>
+
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; margin-top: 60px;">
+
+  <!-- Botón 1: Servicios -->
+  <%= link_to servicios_path, style: "text-decoration: none;" do %>
+    <div style="width: 220px; height: 150px; background-color: #50A371; color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: bold; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+      Ver Servicios
+    </div>
+  <% end %>
+
+  <!-- Botón 2: Informes -->
+  <%= link_to informes_path, style: "text-decoration: none;" do %>
+    <div style="width: 220px; height: 150px; background-color: #4F83CC; color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: bold; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+      Ver Informes
+    </div>
+  <% end %>
+
+  <!-- Botón 3: Usuarios -->
+  <%= link_to users_path, style: "text-decoration: none;" do %>
+    <div style="width: 220px; height: 150px; background-color: #F39C12; color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: bold; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+      Usuarios del Sistema
+    </div>
+  <% end %>
+
+  <!-- Botón 4: Próximamente -->
+  <div style="width: 220px; height: 150px; background-color: #7f8c8d; color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: bold; box-shadow: 0 4px 12px rgba(0,0,0,0.15); cursor: not-allowed;">
+    Estadísticas (Próximamente)
+  </div>
+
+</div>

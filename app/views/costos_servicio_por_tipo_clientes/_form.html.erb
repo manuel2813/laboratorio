@@ -1,0 +1,32 @@
+<%= form_with(model: costos_servicio_por_tipo_cliente) do |form| %>
+  <% if costos_servicio_por_tipo_cliente.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(costos_servicio_por_tipo_cliente.errors.count, "error") %> prohibited this costos_servicio_por_tipo_cliente from being saved:</h2>
+
+      <ul>
+        <% costos_servicio_por_tipo_cliente.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :tipo_cliente_id, style: "display: block" %>
+    <%= form.number_field :tipo_cliente_id %>
+  </div>
+
+  <div>
+    <%= form.label :codigo_servicio, style: "display: block" %>
+    <%= form.text_field :codigo_servicio %>
+  </div>
+
+  <div>
+    <%= form.label :costo, style: "display: block" %>
+    <%= form.text_field :costo %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
