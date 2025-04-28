@@ -4,103 +4,140 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Seguimiento de su Muestra</title>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader&display=swap" rel="stylesheet">
+
   <style>
     body {
-      font-family: 'Newsreader', serif;
       margin: 0;
       padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      background-color: #f7f7f7;
+      font-family: 'Newsreader', serif;
+      background: url("<%= asset_path('fondo_login.svg') %>") no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 0;
     }
 
     .login-container {
-      background-color: #e7f5e9;
-      padding: 40px;
+      position: relative;
+      z-index: 1;
+      background: rgba(0, 0, 0, 0.85);
+      padding: 30px 40px 25px;
       border-radius: 25px;
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-      text-align: center;
+      box-shadow: 0 0 20px rgba(0, 255, 130, 0.4);
       width: 400px;
+      margin: 30px auto 0 auto; /* ← Esto acerca el login hacia arriba */
+      animation: fadeInUp 1s ease;
+      text-align: left;
     }
 
     .login-container h1 {
-      font-size: 2rem;
-      color: #005f35;
-      margin-bottom: 25px;
-    }
-
-    .login-container img {
-      width: 120px;
-      height: 120px;
-      margin-bottom: 25px;
+      text-align: center;
+      font-size: 2.2rem;
+      color: #DFFFD8;
+      margin-bottom: 15px;
+      text-shadow: 0 0 5px #00ff73;
     }
 
     .form-group {
-      margin-bottom: 15px;
-      text-align: left;
+      margin-bottom: 12px;
     }
 
     .form-group label {
       display: block;
-      margin-bottom: 5px;
+      margin-bottom: 6px;
+      color: #e2ffe4;
       font-size: 1rem;
-      color: #333;
     }
 
     .form-control {
       width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
+      padding: 12px;
+      border: 1px solid #66ff99;
+      border-radius: 10px;
       font-size: 1rem;
+      background-color: #1c3a2f;
+      color: #e2ffe4;
+      box-shadow: inset 0 0 5px #00ff73;
+      transition: 0.3s ease;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: #5aff9d;
+      box-shadow: 0 0 10px #5aff9d;
     }
 
     .btn-primary {
-      background-color:rgb(85, 133, 103);
+      background-color: #00cc66;
       color: white;
       border: none;
-      padding: 15px;
-      font-size: 1.2rem;
+      padding: 14px;
+      font-size: 1.1rem;
       width: 100%;
-      border-radius: 5px;
+      border-radius: 8px;
       cursor: pointer;
-      transition: background-color 0.3s;
+      transition: all 0.3s ease;
+      text-shadow: 0 0 2px black;
+      box-shadow: 0 0 8px #00ff73, 0 0 15px #004d33;
+      display: inline-block;
+      text-align: center;
+      margin-top: 6px;
     }
 
     .btn-primary:hover {
-      background-color: #29573c;
+      background-color: #5aff9d;
+      box-shadow: 0 0 12px #5aff9d, 0 0 20px #00cc66;
     }
 
     .forgot-password {
-      margin-top: 15px;
+      margin-top: 18px;
+      text-align: center;
     }
 
     .forgot-password a {
+      color: #b3fccc;
+      font-size: 0.95rem;
       text-decoration: none;
-      color: #50A371;
-      font-size: 1rem;
     }
 
     .forgot-password a:hover {
       text-decoration: underline;
+      color: #5aff9d;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        transform: translateY(50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
     }
   </style>
 </head>
 <body>
   <div class="login-container">
-    
     <h1>Seguimiento de su Muestra</h1>
 
     <%= form_with url: authenticate_client_path, method: :post, local: true do |f| %>
       <div class="form-group">
-        <%= f.label :codigo_muestra, 'Código : ' %>
+        <%= f.label :codigo_muestra, 'Código :' %>
         <%= f.text_field :codigo_muestra, class: "form-control", placeholder: "Ingrese su código de muestra" %>
       </div>
       <div class="form-group">
-        <%= f.label :password, 'Contraseña : ' %>
+        <%= f.label :password, 'Contraseña :' %>
         <%= f.password_field :password, class: "form-control", placeholder: "Ingrese su contraseña" %>
       </div>
       <div>
