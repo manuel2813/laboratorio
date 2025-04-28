@@ -8,13 +8,16 @@ class CostosServicioPorTipoClientesController < ApplicationController
   def index
     @from_date = params[:from_date]
     @to_date = params[:to_date]
-
+  
     @costos_servicio_por_tipo_clientes = CostosServicioPorTipoCliente.includes(:servicio, :tipo_cliente)
-
+  
     if @from_date.present? && @to_date.present?
       @costos_servicio_por_tipo_clientes = @costos_servicio_por_tipo_clientes.where(created_at: @from_date.to_date.beginning_of_day..@to_date.to_date.end_of_day)
     end
+  
+    @servicios = Servicio.all.index_by(&:codigo_servicio)  # <--- agregas esta línea
   end
+  
 
   # GET /costos_servicio_por_tipo_clientes/1
   def show

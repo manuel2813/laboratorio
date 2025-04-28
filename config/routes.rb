@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  # Añade esta línea para montar Active Storage
+  mount ActiveStorage::Engine => "/rails/active_storage"
   # Configura primero Devise
   devise_for :users, skip: [:sessions]
   devise_scope :user do

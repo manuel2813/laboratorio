@@ -15,9 +15,20 @@ es:
             role:
               blank: "El rol no puede estar vacío."
               inclusion: "El rol seleccionado no es válido."
+      models:
+        servicio: "Servicio"
+      attributes:
+        servicio:
+          codigo_servicio: "Código del Servicio"
+          nombre: "Nombre"
+          descripcion: "Descripción"
+          costo_base: "Costo Base"
+          laboratorista: "Laboratorista"
+          imagen_archivo: "Imagen del Servicio"
   errors:
     messages:
       blank: "no puede estar vacío"
+      required: "es obligatorio"
       taken: "ya ha sido registrado"
       confirmation: "no coincide con %{attribute}"
       too_short: "es demasiado corto (mínimo %{count} caracteres)"

@@ -5,6 +5,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - .:/usr/src/app
+      - storage_data:/usr/src/app/storage
     ports:
       - "3000:3000" # Cambiado al puerto 3000
     depends_on:
@@ -29,3 +30,4 @@ services:
 
 volumes:
   pgdata:
+  storage_data:

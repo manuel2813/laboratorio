@@ -52,17 +52,6 @@ ActiveRecord::Schema[7.0].define(version: 2025_04_20_072630) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "agenda_laboratoristas", force: :cascade do |t|
-    t.integer "laboratorista_id"
-    t.date "fecha"
-    t.time "hora_inicio"
-    t.time "hora_fin"
-    t.string "descripcion"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["laboratorista_id"], name: "index_agenda_laboratoristas_on_laboratorista_id"
-  end
-
   create_table "clients", force: :cascade do |t|
     t.string "codigo_muestra"
     t.string "password"
@@ -152,7 +141,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_04_20_072630) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "agenda_laboratoristas", "users", column: "laboratorista_id"
+  add_foreign_key "samples", "servicios"
   add_foreign_key "samples", "users", column: "laboratorista_id", on_delete: :cascade
   add_foreign_key "samples", "users", on_delete: :cascade
 end

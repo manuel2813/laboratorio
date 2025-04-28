@@ -31,19 +31,25 @@
   </div>
 
   <div>
-    <%= form.label :laboratorista_id %>
-    <%= form.number_field :laboratorista_id %>
-  </div>
+  <%= form.label :laboratorista_id, "Seleccionar Laboratorista" %><br>
+  <%= form.collection_select :laboratorista_id, 
+                              User.laboratorista,   # Solo usuarios laboratoristas
+                              :id,                  # Valor que se guarda
+                              :email,               # Lo que se muestra en el desplegable
+                              { prompt: "Seleccione un laboratorista" }, 
+                              { class: "form-control" } %>
+</div>
 
   <div>
     <%= form.label :imagen_archivo, "Subir imagen desde tu PC" %>
     <%= form.file_field :imagen_archivo, direct_upload: true %>
-    <% if servicio.imagen_archivo.attached? %>
-      <div style="margin-top: 10px;">
-        <strong>Imagen actual:</strong><br>
-        <%= image_tag servicio.imagen_archivo.variant(resize_to_limit: [200, 150]) %>
-      </div>
-    <% end %>
+    <% if servicio.persisted? && servicio.imagen_archivo.attached? %>
+  <div style="margin-top: 10px;">
+    <strong>Imagen actual:</strong><br>
+    <%= image_tag servicio.imagen_archivo.variant(resize_to_limit: [200, 150]) %>
+  </div>
+<% end %>
+
   </div>
 
   <div style="margin-top: 20px;">

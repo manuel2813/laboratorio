@@ -16,7 +16,7 @@
           <% @costos_servicio_por_tipo_clientes.each do |costo| %>
             <tr>
               <td><%= costo.tipo_cliente&.nombre || "N/A" %></td>
-              <td><%= Servicio.find_by(codigo_servicio: costo.codigo_servicio)&.nombre || costo.codigo_servicio %></td>
+              <td><%= @servicios[costo.codigo_servicio]&.nombre || costo.codigo_servicio %></td>
               <td>S/ <%= number_to_currency(costo.costo, unit: "", precision: 2) %></td>
               <td>
                 <%= link_to "Editar", edit_costos_servicio_por_tipo_cliente_path(costo), class: "btn btn-warning btn-sm" %>
