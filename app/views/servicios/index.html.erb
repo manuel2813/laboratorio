@@ -9,7 +9,7 @@
       <%= link_to servicio_path(servicio), style: "text-decoration: none;" do %>
         <div style="height: 200px; overflow: hidden;">
           <% if servicio.imagen_archivo.attached? %>
-            <%= image_tag servicio.imagen_archivo, style: "width: 100%; height: 100%; object-fit: cover;" %>
+            <%= image_tag url_for(servicio.imagen_archivo), style: "width: 100%; height: 100%; object-fit: cover;" %>
           <% else %>
             <%= image_tag "https://via.placeholder.com/600x400.png?text=Sin+Imagen", style: "width: 100%; height: 100%; object-fit: cover;" %>
           <% end %>
@@ -26,7 +26,7 @@
           <%= link_to "Eliminar", servicio_path(servicio), method: :delete, data: { confirm: "¿Estás seguro de que quieres eliminar este servicio?" }, class: "btn btn-danger btn-sm", style: "padding: 5px 10px; background-color: #dc3545; color: white; text-decoration: none; border-radius: 5px;" %>
         </div>
       <% end %>
-
+      
     </div>
   <% end %>
 </div>

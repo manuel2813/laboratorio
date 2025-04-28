@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_04_20_072630) do
+ActiveRecord::Schema[7.0].define(version: 2025_04_28_123911) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -57,6 +57,16 @@ ActiveRecord::Schema[7.0].define(version: 2025_04_20_072630) do
     t.string "password"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "compras", force: :cascade do |t|
+    t.decimal "monto", precision: 10, scale: 2
+    t.bigint "servicio_id", null: false
+    t.bigint "cliente_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cliente_id"], name: "index_compras_on_cliente_id"
+    t.index ["servicio_id"], name: "index_compras_on_servicio_id"
   end
 
   create_table "costos_servicio_por_tipo_clientes", force: :cascade do |t|
@@ -141,6 +151,8 @@ ActiveRecord::Schema[7.0].define(version: 2025_04_20_072630) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "compras", "servicios"
+  add_foreign_key "compras", "users", column: "cliente_id"
   add_foreign_key "samples", "servicios"
   add_foreign_key "samples", "users", column: "laboratorista_id", on_delete: :cascade
   add_foreign_key "samples", "users", on_delete: :cascade
