@@ -1,42 +1,60 @@
 Rails.application.routes.draw do
-  # Panel del Gerente
-  get 'gerente/dashboard', to: 'gerente#dashboard', as: :gerente_dashboard
-
-  # Login de Clientes
-  get 'clients/login'
-  get 'clients/authenticate'
-  post '/clients/login', to: 'clients#authenticate', as: :authenticate_client
-  get '/clients/logout', to: 'clients#logout', as: :logout_client
-
-  # Recursos principales
-  resources :servicios
-  resources :costos_servicio_por_tipo_clientes
-  resources :informes
-  resources :notificacions
-  resources :tipo_clientes
-  resources :samples
-  resources :users, only: [:index, :new, :create, :edit, :update, :destroy]
-
-  # Página de inicio público
-  root to: "home#index"
-  get '/clients/login', to: 'clients#login', as: :login_client
-
-  # Selección de rol
-  get '/select_role', to: 'home#select_role', as: :select_role
-  get '/redirect_to_login', to: 'clients#redirect_to_login', as: :redirect_to_login_client
-
-  # Configuración de Devise sin rutas automáticas de sesión
+  # Configura primero Devise
   devise_for :users, skip: [:sessions]
   devise_scope :user do
-    get '/users/sign_in', to: 'devise/sessions#new', as: :new_user_session
-    post '/users/sign_in', to: 'devise/sessions#create'
-    get '/users/sign_out', to: 'devise/sessions#destroy', as: :destroy_user_session
+    get    '/users/sign_in',  to: 'users/sessions#new',     as: :new_user_session
+    post   '/users/sign_in',  to: 'users/sessions#create',  as: :user_session
+    delete '/users/sign_out', to: 'users/sessions#destroy', as: :destroy_user_session
   end
 
-  # Otras rutas públicas
+  # Luego tus rutas normales
+  get 'gerente/dashboard', to: 'gerente#dashboard', as: :gerente_dashboard
+  get 'laboratorista/dashboard', to: 'laboratorista#dashboard', as: :laboratorista_dashboard
+
+  get 'clients/login', to: 'clients#login', as: :login_client
+  post 'clients/authenticate', to: 'clients#authenticate', as: :authenticate_client
+  get 'clients/logout', to: 'clients#logout', as: :logout_client
+
+  resources :agenda_laboratoristas do
+    collection do
+      post :crear_horarios_multiples
+    end
+  end
+  resources :servicios
+  resources :notificacions
+  resources :tipo_clientes
+  resources :users, only: [:index, :new, :create, :edit, :update, :destroy] # <-- Ahora no pisará sign_out
+  resources :samples do
+    member do
+      get :export_pdf
+      get :cargar_resultado_individual 
+      patch :guardar_resultado
+    end
+    collection do
+      get :cargar_resultado
+    end
+  end
+  resources :costos_servicio_por_tipo_clientes do
+    member do
+      get :export_pdf
+    end
+    collection do
+      get :export_all_pdf
+    end
+  end
+  resources :informes do
+    member do
+      get :export_pdf
+    end
+    collection do
+      get :export_all_pdf
+      get :generar
+    end
+  end
+
+  root to: "home#index"
   get '/tutoriales', to: 'home#tutoriales', as: :tutoriales
 
-  # Rutas protegidas
   authenticated :user do
     root to: "home#index", as: :authenticated_root
   end

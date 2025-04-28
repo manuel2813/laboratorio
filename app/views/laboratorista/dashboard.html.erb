@@ -1,0 +1,37 @@
+<h1 class="text-center text-success mt-5 mb-4" style="font-size: 2.5rem;">
+  🧪 Bienvenido, Laboratorista
+</h1>
+
+<p class="text-center mb-5">
+  Aquí puedes gestionar tus muestras, cargar resultados y generar informes.
+</p>
+
+<div class="d-flex flex-wrap justify-content-center gap-4 mt-4">
+  <!-- ✅ Ver Muestras -->
+  <%= link_to samples_path, style: "text-decoration: none;" do %>
+    <div style="width: 220px; height: 140px; background-color: #3498db; color: white; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 1.1rem; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+      📦 Ver Muestras
+    </div>
+  <% end %>
+
+  <!-- Botón: Cargar Resultados de Análisis -->
+  <%= link_to cargar_resultado_samples_path, style: "text-decoration: none;" do %>
+    <div style="width: 220px; height: 140px; background-color: #2ecc71; color: white; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 1.1rem; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+      📑 Cargar Resultados
+    </div>
+  <% end %>
+
+  <!-- 🔧 Estadísticas (futuro) -->
+  <%= link_to '#', style: "text-decoration: none;" do %>
+    <div style="width: 220px; height: 140px; background-color: #9b59b6; color: white; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 1.1rem; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+      📈 Ver Estadísticas
+    </div>
+  <% end %>
+
+  <!-- 🔧 Agenda -->
+  <%= link_to agenda_laboratoristas_path, style: "text-decoration: none;" do %>
+    <div style="width: 220px; height: 140px; background-color: #e67e22; color: white; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 1.1rem; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+      🗓️ Configurar Agenda
+    </div>
+  <% end %>
+</div>

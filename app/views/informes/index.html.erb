@@ -1,14 +1,69 @@
-<p style="color: green"><%= notice %></p>
+<p style="color: green; text-align: center;"><%= notice %></p>
 
-<h1>Informes</h1>
+<h1 class="text-center text-primary fw-bold my-4" style="font-family: 'Segoe UI', sans-serif;">📑 Informes Generados</h1>
 
-<div id="informes">
+<!-- Tarjetas de informes -->
+<div id="informes" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; max-width: 100%;">
   <% @informes.each do |informe| %>
-    <%= render informe %>
-    <p>
-      <%= link_to "Show this informe", informe %>
-    </p>
+    <div style="background-color: #f8f9fa; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); padding: 20px; width: 300px; max-width: 100%; min-width: 260px; text-align: left; flex-grow: 1;">
+      <p><strong>Código solicitud:</strong> <%= informe.codigo_solicitud %></p>
+      <p><strong>Laboratorista:</strong> <%= informe.laboratorista_id %></p>
+      <p><strong>Gerente:</strong> <%= informe.gerente_id %></p>
+      <p><strong>Fecha generación:</strong> <%= informe.fecha_generacion %></p>
+      <p><strong>Fecha firma gerente:</strong> <%= informe.fecha_firma_gerente %></p>
+      <p><strong>Fecha envío cliente:</strong> <%= informe.fecha_envio_cliente %></p>
+      <p><strong>Archivo:</strong> <%= informe.archivo %></p>
+      <p><strong>Estado:</strong> <%= informe.estado %></p>
+
+      <div style="margin-top: 10px; display: flex; flex-wrap: wrap; gap: 5px; justify-content: center;">
+        <%= link_to "Ver Informe", informe, class: "btn btn-primary btn-sm fw-bold" %>
+        <%= link_to "Editar", edit_informe_path(informe), class: "btn btn-warning btn-sm fw-bold" %>
+        <%= link_to "Eliminar", informe_path(informe), method: :delete, data: { confirm: "¿Estás seguro?" }, class: "btn btn-danger btn-sm fw-bold" %>
+        <%= link_to "Exportar en PDF", export_pdf_informe_path(informe), class: "btn btn-success btn-sm fw-bold", target: "_blank" %>
+      </div>
+    </div>
   <% end %>
 </div>
 
-<%= link_to "New informe", new_informe_path %>
+<div class="text-center mt-4">
+  <%= link_to "📥 Exportar Lista en PDF", export_all_pdf_informes_path, class: "btn btn-outline-primary fw-bold", target: "_blank" %>
+</div>
+
+<% if params[:start_date].present? && params[:end_date].present? %>
+  <div class="text-center mt-3 mb-4">
+    <%= link_to "⬇️ Exportar Resultados en PDF", informes_path(format: :pdf, start_date: params[:start_date], end_date: params[:end_date]),
+                class: "btn btn-outline-primary fw-bold px-4",
+                target: "_blank" %>
+  </div>
+<% end %>
+
+<!-- Formulario de Filtro por Fecha -->
+<div class="container my-4 text-center">
+  <h2 class="text-primary mb-3">🗓️ Filtrar Informes por Fecha de Generación</h2>
+  <%= form_with url: informes_path, method: :get, local: true, class: "row g-3 align-items-end justify-content-center" do |form| %>
+    <div class="col-auto">
+      <%= form.label :start_date, "Desde", class: "form-label fw-bold" %>
+      <%= form.date_field :start_date, value: params[:start_date], class: "form-control" %>
+    </div>
+
+    <div class="col-auto">
+      <%= form.label :end_date, "Hasta", class: "form-label fw-bold" %>
+      <%= form.date_field :end_date, value: params[:end_date], class: "form-control" %>
+    </div>
+
+    <div class="col-auto">
+      <%= form.submit "Filtrar", class: "btn btn-primary fw-bold px-4" %>
+    </div>
+  <% end %>
+</div>
+
+<div class="text-center mt-3">
+  <%= link_to "Nuevo Informe", new_informe_path, style: "background-color: #28a745; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: bold;" %>
+</div>
+
+<% if current_user&.gerente? %>
+  <div style="text-align: center; margin-top: 20px;">
+    <%= link_to "← Volver al Panel del Gerente", gerente_dashboard_path,
+      style: "background-color: #6c757d; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: bold;" %>
+  </div>
+<% end %>

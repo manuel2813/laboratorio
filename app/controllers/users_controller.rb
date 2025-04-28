@@ -6,8 +6,15 @@ class UsersController < ApplicationController
   before_action :set_locale
 
   def index
-    @users = User.all
+    if current_user.admin?
+      @users = User.all
+    elsif current_user.gerente?
+      @users = User.where.not(role: :admin)
+    else
+      redirect_to root_path, alert: "No autorizado."
+    end
   end
+  
 
   def new
     @user = User.new
@@ -67,7 +74,9 @@ class UsersController < ApplicationController
   end
 
   def authorize_role
-    redirect_to root_path, alert: 'Acceso no autorizado.' unless current_user.admin?
+    unless current_user.admin? || current_user.gerente?
+      redirect_to root_path, alert: 'Acceso no autorizado.'
+    end
   end
 
   def authorize_user

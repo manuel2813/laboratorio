@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_04_13_055220) do
+ActiveRecord::Schema[7.0].define(version: 2025_04_20_072630) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -40,6 +40,27 @@ ActiveRecord::Schema[7.0].define(version: 2025_04_13_055220) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "agenda_laboratorista", force: :cascade do |t|
+    t.integer "laboratorista_id"
+    t.date "fecha"
+    t.time "hora_inicio"
+    t.time "hora_fin"
+    t.string "descripcion"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "agenda_laboratoristas", force: :cascade do |t|
+    t.integer "laboratorista_id"
+    t.date "fecha"
+    t.time "hora_inicio"
+    t.time "hora_fin"
+    t.string "descripcion"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["laboratorista_id"], name: "index_agenda_laboratoristas_on_laboratorista_id"
   end
 
   create_table "clients", force: :cascade do |t|
@@ -86,6 +107,12 @@ ActiveRecord::Schema[7.0].define(version: 2025_04_13_055220) do
     t.bigint "laboratorista_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "servicio_id"
+    t.date "fecha_recepcion"
+    t.string "prioridad"
+    t.text "observaciones"
+    t.date "fecha_resultado"
+    t.string "estado"
     t.index ["code"], name: "index_samples_on_code", unique: true
     t.index ["laboratorista_id"], name: "index_samples_on_laboratorista_id"
     t.index ["user_id"], name: "index_samples_on_user_id"
@@ -125,6 +152,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_04_13_055220) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "agenda_laboratoristas", "users", column: "laboratorista_id"
   add_foreign_key "samples", "users", column: "laboratorista_id", on_delete: :cascade
   add_foreign_key "samples", "users", on_delete: :cascade
 end

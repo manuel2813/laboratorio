@@ -1,0 +1,61 @@
+<h1 class="text-center text-primary mb-4">Detalle de la Muestra</h1>
+
+<div class="container shadow-lg p-5 bg-light rounded">
+  <!-- Mensaje de éxito -->
+  <% if notice %>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <%= notice %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <% end %>
+
+  <!-- Detalles de la muestra -->
+  <div class="mb-4">
+    <h4><strong>Código:</strong></h4>
+    <p class="text-muted"><%= @sample.code %></p>
+  </div>
+
+  <div class="mb-4">
+    <h4><strong>Resultados:</strong></h4>
+    <p class="text-muted"><%= @sample.results.presence || "Sin resultados registrados" %></p>
+  </div>
+
+  <div class="mb-4">
+    <h4><strong>Cliente asignado:</strong></h4>
+    <p class="text-muted"><%= @sample.user&.email || "Sin cliente asignado" %></p>
+  </div>
+
+  <div class="mb-4">
+    <h4><strong>Laboratorista responsable:</strong></h4>
+    <p class="text-muted"><%= @sample.laboratorista&.email || "No especificado" %></p>
+  </div>
+
+  <!-- Botones de acción -->
+  <div class="text-center mt-5">
+    <%= link_to 'Editar Muestra', edit_sample_path(@sample), class: "btn btn-warning px-4 py-2 fw-bold me-3" %>
+    <%= link_to 'Volver a la Lista de Muestras', samples_path, class: "btn btn-secondary px-4 py-2 fw-bold" %>
+  </div>
+  <div class="text-center mt-4">
+  <%= link_to "📄 Ver PDF", export_pdf_sample_path(@sample), class: "btn btn-outline-primary", target: "_blank" %>
+
+</div>
+
+<div class="mb-4">
+  <h5><strong>Fecha de Registro:</strong></h5>
+  <p class="text-muted"><%= @sample.created_at.strftime("%d/%m/%Y %H:%M:%S") %></p>
+</div>
+
+<div class="mb-4">
+  <h5><strong>Fecha de Registro:</strong></h5>
+  <p class="text-muted"><%= @sample.created_at.strftime("%d/%m/%Y %H:%M:%S") %></p>
+</div>
+
+<div class="mb-4">
+  <h5><strong>Última Actualización:</strong></h5>
+  <% if @sample.updated_at != @sample.created_at %>
+    <p class="text-muted"><%= @sample.updated_at.strftime("%d/%m/%Y %H:%M:%S") %></p>
+  <% else %>
+    <p class="text-muted">Sin modificar</p>
+  <% end %>
+</div>
+</div>

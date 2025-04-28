@@ -1,0 +1,41 @@
+<div class="container py-5 mt-8" style="margin-top: 250px;">
+
+  <h2 class="text-center text-primary mb-4" style="font-size: 2rem; font-weight: bold;">📅 Mi Agenda Laboratorista</h2>
+
+  <% horas = (0..23).map { |h| Time.parse("#{h}:00") } %>
+  <% dias = %w[Lunes Martes Miércoles Jueves Viernes] %>
+
+  <table class="table table-bordered text-center" style="table-layout: fixed;">
+    <thead class="table-secondary">
+      <tr>
+        <th style="width: 12%">Hora</th>
+        <% dias.each do |dia| %>
+          <th><%= dia %></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% horas.each do |hora| %>  
+        <tr>
+          <td class="fw-bold" style="background-color: #f0f0f0"><%= hora.strftime("%H:%M") %></td>
+          <% dias.each_with_index do |dia, i| %>
+            <% fecha_dia = Date.today.beginning_of_week(:monday) + i.days %>
+            <% bloque = @agenda_laboratoristas.find { |b| b.fecha == fecha_dia && b.hora_inicio.hour == hora.hour } %>
+            <td>
+              <% if bloque %>
+                <span class="badge bg-success d-block">Disponible</span>
+                <small class="text-muted"><%= bloque.descripcion %></small>
+              <% else %>
+                <span class="badge bg-secondary d-block">No disponible</span>
+              <% end %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <div class="text-center mt-4">
+    <%= link_to "➕ Añadir Horario", new_agenda_laboratorista_path, class: "btn btn-success fw-bold" %>
+  </div>
+</div>

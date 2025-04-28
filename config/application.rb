@@ -9,8 +9,9 @@ Bundler.require(*Rails.groups)
 module App
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.0
-
+    config.load_defaults 7.0      
+    config.time_zone = 'Lima'
+    config.active_record.default_timezone = :local
     # Configuración para la localización por defecto en español
     config.i18n.available_locales = [:en, :es]
     config.i18n.default_locale = :es

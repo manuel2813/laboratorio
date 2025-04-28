@@ -17,7 +17,8 @@ gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby] # Para Windows
 gem "bootsnap", require: false # Acelera tiempos de inicio
 gem "devise", "~> 4.9" # Manejo de autenticación
 gem "jquery-rails" # (Opcional) Para usar jQuery en Rails
-
+gem 'prawn'
+gem 'prawn-table'
 gem 'redis'
 
 gem 'activerecord-session_store'

@@ -18,7 +18,7 @@
     </div>
   <% end %>
 
-  <!-- Botón 3: Usuarios -->
+  <!-- Botón 3: Usuarios del Sistema -->
   <%= link_to users_path, style: "text-decoration: none;" do %>
     <div style="width: 220px; height: 150px; background-color: #F39C12; color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: bold; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
       Usuarios del Sistema
@@ -29,5 +29,33 @@
   <div style="width: 220px; height: 150px; background-color: #7f8c8d; color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: bold; box-shadow: 0 4px 12px rgba(0,0,0,0.15); cursor: not-allowed;">
     Estadísticas (Próximamente)
   </div>
+
+  <!-- Botón 5: Notificaciones -->
+  <%= link_to notificacions_path, style: "text-decoration: none;" do %>
+    <div style="width: 220px; height: 150px; background-color: #5bc0de; color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: bold; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+      Notificaciones
+    </div>
+  <% end %>
+
+  <!-- Botón 6: Tipos de Cliente -->
+  <%= link_to tipo_clientes_path, style: "text-decoration: none;" do %>
+    <div style="width: 220px; height: 150px; background-color: #9b59b6; color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: bold; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+      Tipos de Cliente
+    </div>
+  <% end %>
+
+  <!-- Botón 7: Costos por Tipo de Cliente -->
+  <%= link_to costos_servicio_por_tipo_clientes_path, style: "text-decoration: none;" do %>
+    <div style="width: 220px; height: 150px; background-color: #16a085; color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: bold; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+      Costos por Tipo de Cliente
+    </div>
+  <% end %>
+
+  <!-- Botón 8: Muestras -->
+  <%= link_to samples_path, style: "text-decoration: none;" do %>
+    <div style="width: 220px; height: 150px; background-color: #17a2b8; color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: bold; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+      Muestras
+    </div>
+  <% end %>
 
 </div>

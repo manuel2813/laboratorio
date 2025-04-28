@@ -1,14 +1,59 @@
-<p style="color: green"><%= notice %></p>
+<h1 class="text-center text-primary mb-4">Lista de Costos por Tipo de Cliente</h1>
 
-<h1>Costos servicio por tipo clientes</h1>
+<div class="container mt-4 shadow-lg p-5 bg-light rounded">
+  <% if @costos_servicio_por_tipo_clientes.any? %>
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered shadow-sm">
+        <thead class="table-dark">
+          <tr>
+            <th>Tipo de Cliente</th>
+            <th>Servicio</th>
+            <th>Costo</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @costos_servicio_por_tipo_clientes.each do |costo| %>
+            <tr>
+              <td><%= costo.tipo_cliente&.nombre || "N/A" %></td>
+              <td><%= Servicio.find_by(codigo_servicio: costo.codigo_servicio)&.nombre || costo.codigo_servicio %></td>
+              <td>S/ <%= number_to_currency(costo.costo, unit: "", precision: 2) %></td>
+              <td>
+                <%= link_to "Editar", edit_costos_servicio_por_tipo_cliente_path(costo), class: "btn btn-warning btn-sm" %>
+                <%= link_to "Eliminar", costos_servicio_por_tipo_cliente_path(costo), method: :delete, data: { confirm: "¿Estás seguro?" }, class: "btn btn-danger btn-sm" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p class="text-center">No hay registros de costos definidos aún.</p>
+  <% end %>
 
-<div id="costos_servicio_por_tipo_clientes">
-  <% @costos_servicio_por_tipo_clientes.each do |costos_servicio_por_tipo_cliente| %>
-    <%= render costos_servicio_por_tipo_cliente %>
-    <p>
-      <%= link_to "Show this costos servicio por tipo cliente", costos_servicio_por_tipo_cliente %>
-    </p>
+  <div class="text-center mt-4">
+    <%= link_to "Nuevo Costo", new_costos_servicio_por_tipo_cliente_path, class: "btn btn-success" %>
+    <%= link_to "← Volver al Panel del Gerente", gerente_dashboard_path, class: "btn btn-secondary ms-3" %>
+  </div>
+  <div class="text-center mb-4">
+  <%= link_to "📄 Exportar Lista en PDF", export_all_pdf_costos_servicio_por_tipo_clientes_path(request.query_parameters), class: "btn btn-outline-primary fw-bold", target: "_blank" %>
+
+</div>
+
+<div class="mb-4">
+  <%= form_with url: costos_servicio_por_tipo_clientes_path, method: :get, local: true, class: "row g-3" do %>
+    <div class="col-md-4">
+      <%= label_tag :from_date, "Desde", class: "form-label" %>
+      <%= date_field_tag :from_date, params[:from_date], class: "form-control" %>
+    </div>
+    <div class="col-md-4">
+      <%= label_tag :to_date, "Hasta", class: "form-label" %>
+      <%= date_field_tag :to_date, params[:to_date], class: "form-control" %>
+    </div>
+    <div class="col-md-4 align-self-end">
+      <%= submit_tag "Filtrar", class: "btn btn-primary" %>
+    </div>
   <% end %>
 </div>
 
-<%= link_to "New costos servicio por tipo cliente", new_costos_servicio_por_tipo_cliente_path %>
+</div>

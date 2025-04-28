@@ -1,0 +1,46 @@
+<div class="container">
+  <%= form_with url: crear_horarios_multiples_agenda_laboratoristas_path, local: true do |form| %>
+    <% if flash[:error].present? %>
+      <div class="alert alert-danger"><%= flash[:error] %></div>
+    <% end %>
+
+    <h3 class="text-center text-primary mb-4">🗓️ Añadir Horario Laboratorista</h3>
+
+    <div class="mb-3">
+      <label class="form-label fw-bold">Selecciona los días:</label><br>
+      <% %w[lunes martes miercoles jueves viernes].each do |dia| %>
+        <div class="form-check form-check-inline">
+          <%= check_box_tag "dias[]", dia, false, id: "dia_\#{dia}", class: "form-check-input" %>
+          <%= label_tag "dia_\#{dia}", dia.capitalize, class: "form-check-label" %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        <%= label_tag :hora_inicio, "Hora de Inicio", class: "form-label fw-bold" %>
+        <%= time_field_tag :hora_inicio, nil, class: "form-control" %>
+      </div>
+
+      <div class="col-md-4 mb-3">
+        <%= label_tag :hora_fin, "Hora de Fin", class: "form-label fw-bold" %>
+        <%= time_field_tag :hora_fin, nil, class: "form-control" %>
+      </div>
+
+      <div class="col-md-4 mb-3">
+        <%= label_tag :duracion, "Duración por bloque (minutos)", class: "form-label fw-bold" %>
+        <%= number_field_tag :duracion, 60, class: "form-control", min: 1, step: 1 %>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <%= label_tag :descripcion, "Descripción (opcional)", class: "form-label fw-bold" %>
+      <%= text_field_tag :descripcion, nil, class: "form-control" %>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <%= submit_tag "Guardar Horarios", class: "btn btn-success px-4 fw-bold" %>
+      <%= link_to "Cancelar", agenda_laboratoristas_path, class: "btn btn-secondary ms-3 px-4" %>
+    </div>
+  <% end %>
+</div>

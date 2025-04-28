@@ -14,21 +14,56 @@
     </div>
 
     <div class="mb-4">
-      <%= form.label :results, 'Resultados', class: "form-label fw-bold text-dark" %>
-      <%= form.text_area :results, class: "form-control border-primary", placeholder: 'Ingrese los resultados...' %>
+    <%= form.label :results, 'Descripción', class: "form-label fw-bold text-dark" %>
+    <%= form.text_area :results, class: "form-control border-primary", placeholder: 'Ingrese la descripción...' %>
+    
     </div>
 
-    <% if current_user.laboratorista? %>
+    <% if current_user&.laboratorista? %>
       <div class="mb-4">
         <%= form.label :user_id, 'Asignar a Cliente', class: "form-label fw-bold text-dark" %>
         <%= form.collection_select :user_id, User.where(role: :cliente), :id, :email, { prompt: 'Seleccione un cliente' }, class: "form-select border-primary" %>
       </div>
     <% end %>
 
+    <div class="mb-4">
+      <%= form.label :servicio_id, 'Asignar Servicio', class: "form-label fw-bold text-dark" %>
+      <%= form.collection_select :servicio_id, Servicio.all, :id, :nombre, { prompt: 'Seleccione un servicio' }, class: "form-select border-primary" %>
+    </div>
+
+    <div class="mb-4">
+  <%= form.label :fecha_recepcion, 'Fecha de Recepción', class: "form-label fw-bold text-dark" %>
+  <%= form.date_field :fecha_recepcion, class: "form-control border-primary" %>
+</div>
+
+    <div class="mb-4">
+      <%= form.label :estado, 'Estado de la Muestra', class: "form-label fw-bold text-dark" %>
+      <%= form.select :estado, [['Pendiente', 'pendiente'], ['Procesado', 'procesado']], {}, class: "form-select border-primary" %>
+    </div>
+
+    <div class="mb-4">
+  <%= label_tag 'created_at_display', 'Fecha de Registro', class: "form-label fw-bold text-dark" %>
+  <input type="text" id="realtime-clock" class="form-control border-secondary" disabled>
+</div>
+
+
     <div class="text-center">
       <%= form.submit 'Crear Muestra', class: "btn btn-success px-4 py-2 fw-bold" %>
-      <%= link_to 'Volver a la Lista de Muestras', samples_path, class: "btn btn-secondary px-4 py-2 fw-bold ms-3" %>
+      <%= link_to 'Volver a la Lista', samples_path, class: "btn btn-secondary px-4 py-2 fw-bold ms-3" %>
     </div>
   <% end %>
 </div>
+<script>
+  function updateClock() {
+    const now = new Date();
+    const formatted = now.toLocaleString('es-PE', {
+      day: '2-digit', month: '2-digit', year: 'numeric',
+      hour: '2-digit', minute: '2-digit', second: '2-digit'
+    });
+    document.getElementById('realtime-clock').value = formatted;
+  }
 
+  // Actualiza cada segundo
+  setInterval(updateClock, 1000);
+  updateClock(); // Corre la primera vez
+</script>

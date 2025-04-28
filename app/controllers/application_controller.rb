@@ -1,40 +1,28 @@
 class ApplicationController < ActionController::Base
-  before_action :authenticate_user!, except: [:index]
-  skip_before_action :authenticate_user!, only: [:select_role, :login]
-  # Redirige según el rol del usuario
-
-  def after_sign_in_path_for(resource)
-    # Limpia rutas almacenadas previamente
-    session[:user_return_to] = nil
-
-    # Redirige a la selección de roles
-    select_role_path
-  end
-  
-
+  before_action :authenticate_user!, except: [:index, :login, :authenticate_client]
+  before_action :set_cache_headers
+  # Redirigir después de iniciar sesión
   def after_sign_in_path_for(resource)
     if resource.gerente?
       gerente_dashboard_path
+    elsif resource.laboratorista?
+      laboratorista_dashboard_path
+    elsif resource.admin?
+      gerente_dashboard_path # O puedes hacer un panel aparte para admin si quieres
     else
-      super
+      authenticated_root_path
     end
   end
-  #def after_sign_in_path_for(resource)
-    # Limpia rutas almacenadas previamente
-  #  session[:user_return_to] = nil
 
-  #  if resource.admin?
-   #   users_path
-   # else
-   #   samples_path
-  #  end
-  #end
-
-
-
+  # Redirigir después de cerrar sesión
   def after_sign_out_path_for(resource_or_scope)
-    root_path # Cambia a la ruta que desees, como `root_path`
+    root_path
+  end
+  private
+
+  def set_cache_headers
+    response.headers["Cache-Control"] = "no-store"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "0"
   end
 end
-
-  

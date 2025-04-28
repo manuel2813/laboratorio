@@ -1,32 +1,32 @@
-<%= form_with(model: costos_servicio_por_tipo_cliente) do |form| %>
-  <% if costos_servicio_por_tipo_cliente.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(costos_servicio_por_tipo_cliente.errors.count, "error") %> prohibited this costos_servicio_por_tipo_cliente from being saved:</h2>
-
+<%= form_with(model: sample, local: true, class: "needs-validation") do |form| %>
+  <% if sample.errors.any? %>
+    <div class="alert alert-danger">
       <ul>
-        <% costos_servicio_por_tipo_cliente.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+        <% sample.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :tipo_cliente_id, style: "display: block" %>
-    <%= form.number_field :tipo_cliente_id %>
+  <div class="mb-4">
+    <%= form.label :code, 'Código de Muestra', class: "form-label fw-bold text-dark" %>
+    <%= form.text_field :code, class: "form-control border-primary", placeholder: "Ejemplo: M001" %>
   </div>
 
-  <div>
-    <%= form.label :codigo_servicio, style: "display: block" %>
-    <%= form.text_field :codigo_servicio %>
+  <div class="mb-4">
+    <%= form.label :results, 'Resultados', class: "form-label fw-bold text-dark" %>
+    <%= form.text_area :results, class: "form-control border-primary", placeholder: "Escribe los resultados..." %>
   </div>
 
-  <div>
-    <%= form.label :costo, style: "display: block" %>
-    <%= form.text_field :costo %>
-  </div>
+  <% if current_user.laboratorista? %>
+    <div class="mb-4">
+      <%= form.label :user_id, 'Asignar a Cliente', class: "form-label fw-bold text-dark" %>
+      <%= form.collection_select :user_id, User.where(role: :cliente), :id, :email, prompt: "Seleccione un cliente", class: "form-select border-primary" %>
+    </div>
+  <% end %>
 
-  <div>
-    <%= form.submit %>
+  <div class="text-center">
+    <%= form.submit(class: "btn btn-success px-4") %>
   </div>
 <% end %>

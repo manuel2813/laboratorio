@@ -1,9 +1,31 @@
-<h1>New tipo cliente</h1>
+<h1 class="text-center text-primary mb-4">Crear Nuevo Tipo de Cliente</h1>
 
-<%= render "form", tipo_cliente: @tipo_cliente %>
+<div class="container mt-4 shadow-lg p-5 bg-light rounded">
+  <% if @tipo_cliente.errors.any? %>
+    <div class="alert alert-danger">
+      <h4><i class="fas fa-exclamation-circle"></i> Errores:</h4>
+      <ul>
+        <% @tipo_cliente.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
-<br>
+  <%= form_with(model: @tipo_cliente, local: true, class: "needs-validation") do |form| %>
+    <div class="mb-4">
+      <%= form.label :nombre, 'Nombre del Tipo', class: "form-label fw-bold text-dark" %>
+      <%= form.text_field :nombre, class: "form-control border-primary", placeholder: 'Ejemplo: Tesista' %>
+    </div>
 
-<div>
-  <%= link_to "Back to tipo clientes", tipo_clientes_path %>
+    <div class="mb-4">
+      <%= form.label :descripcion, 'Descripción', class: "form-label fw-bold text-dark" %>
+      <%= form.text_field :descripcion, class: "form-control border-primary", placeholder: 'Breve descripción' %>
+    </div>
+
+    <div class="text-center">
+      <%= form.submit 'Crear Tipo de Cliente', class: "btn btn-success px-4 py-2 fw-bold" %>
+      <%= link_to 'Volver a la Lista', tipo_clientes_path, class: "btn btn-secondary px-4 py-2 fw-bold ms-3" %>
+    </div>
+  <% end %>
 </div>

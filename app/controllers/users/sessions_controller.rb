@@ -22,9 +22,12 @@ class Users::SessionsController < Devise::SessionsController
 
   # DELETE /resource/sign_out
   def destroy
-    super
+    signed_out = sign_out(resource_name)
+    reset_session
+    yield if block_given?
+    redirect_to after_sign_out_path_for(resource_name), notice: "Sesión cerrada exitosamente."
   end
-
+  
   protected
 
   # Establecer el rol desde los parámetros o sesión
@@ -32,4 +35,6 @@ class Users::SessionsController < Devise::SessionsController
     @role = params[:role] || session[:role]
     session[:role] = @role if @role.present?
   end
+
+  
 end

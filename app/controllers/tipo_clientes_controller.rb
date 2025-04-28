@@ -1,12 +1,14 @@
 class TipoClientesController < ApplicationController
+  before_action :authenticate_user!
+  before_action :authorize_gerente
   before_action :set_tipo_cliente, only: %i[ show edit update destroy ]
 
-  # GET /tipo_clientes or /tipo_clientes.json
+  # GET /tipo_clientes
   def index
     @tipo_clientes = TipoCliente.all
   end
 
-  # GET /tipo_clientes/1 or /tipo_clientes/1.json
+  # GET /tipo_clientes/1
   def show
   end
 
@@ -19,52 +21,45 @@ class TipoClientesController < ApplicationController
   def edit
   end
 
-  # POST /tipo_clientes or /tipo_clientes.json
+  # POST /tipo_clientes
   def create
     @tipo_cliente = TipoCliente.new(tipo_cliente_params)
 
-    respond_to do |format|
-      if @tipo_cliente.save
-        format.html { redirect_to @tipo_cliente, notice: "Tipo cliente was successfully created." }
-        format.json { render :show, status: :created, location: @tipo_cliente }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @tipo_cliente.errors, status: :unprocessable_entity }
-      end
+    if @tipo_cliente.save
+      redirect_to @tipo_cliente, notice: "Tipo de cliente creado correctamente."
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
-  # PATCH/PUT /tipo_clientes/1 or /tipo_clientes/1.json
+  # PATCH/PUT /tipo_clientes/1
   def update
-    respond_to do |format|
-      if @tipo_cliente.update(tipo_cliente_params)
-        format.html { redirect_to @tipo_cliente, notice: "Tipo cliente was successfully updated." }
-        format.json { render :show, status: :ok, location: @tipo_cliente }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @tipo_cliente.errors, status: :unprocessable_entity }
-      end
+    if @tipo_cliente.update(tipo_cliente_params)
+      redirect_to @tipo_cliente, notice: "Tipo de cliente actualizado correctamente."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
-  # DELETE /tipo_clientes/1 or /tipo_clientes/1.json
+  # DELETE /tipo_clientes/1
   def destroy
     @tipo_cliente.destroy
-
-    respond_to do |format|
-      format.html { redirect_to tipo_clientes_path, status: :see_other, notice: "Tipo cliente was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to tipo_clientes_url, status: :see_other, notice: "Tipo de cliente eliminado correctamente."
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+
     def set_tipo_cliente
       @tipo_cliente = TipoCliente.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def tipo_cliente_params
       params.require(:tipo_cliente).permit(:nombre, :descripcion)
+    end
+
+    def authorize_gerente
+      unless current_user&.gerente?
+        redirect_to root_path, alert: "Acceso denegado: solo disponible para gerentes."
+      end
     end
 end

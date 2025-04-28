@@ -1,78 +1,51 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Laboratorio Central de la UNAS</title>
+  <title>Laboratorio Central de Investigación de la UNAS</title>
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
   <%= javascript_include_tag 'application', 'data-turbo-track': 'reload' %>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;600;700&display=swap" rel="stylesheet">
+
   <style>
-    /* Estilos generales */
+    /* --- Todo tu CSS original de la barra neón aquí --- */
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
+      font-family: 'Newsreader', Arial, sans-serif;
     }
 
     nav {
       position: fixed;
       top: 0;
       width: 100%;
-      background-color: #50A371; /* Nuevo color de fondo */
+      height: 70px;
+      background: 
+        linear-gradient(135deg, rgba(0, 0, 0, 0.85), rgba(30, 30, 30, 0.85)),
+        url('<%= asset_path("barra.svg") %>') no-repeat center center;
+      background-size: cover;
       color: white;
       z-index: 1000;
-      padding: 10px 30px;
+      padding: 0 15px;
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 8px 150px rgba(0, 0, 0, 0.4);
+      clip-path: polygon(0 0, 100% 0, 100% 50%, 90% 100%, 10% 100%, 0 50%);
+      overflow: visible;
     }
 
-    .nav-logo img {
-      height: 50px;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 30px;
-    }
-
-    .nav-links a {
-      color: black; /* Letra negra */
-      text-decoration: none;
-      font-size: 18px;
-    }
-
-    .nav-links a:hover {
-      text-decoration: underline;
-    }
-
-    .btn-login {
-      color: black; /* Letra negra */
-      padding: 5px 15px;
-      text-decoration: none;
-      font-size: 18px;
-      border: none;
-      background: transparent; /* Fondo transparente */
-    }
-
-    .btn-login:hover {
-      color: #f2f2f2;
-    }
-
-    .nav-social {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-
-    .nav-social img {
-      width: 35px;
-      height: 35px;
-    }
-
-    .nav-social img:hover {
-      opacity: 0.8; /* Efecto hover sin fondo */
+    nav::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(to right, #39ff14, #00ffaa, #39ff14);
+      box-shadow: 0 0 6px #39ff14, 0 0 12px #00ffaa, 0 0 18px #39ff14;
+      z-index: -1;
+      pointer-events: none;
     }
 
     .nav-container {
@@ -81,44 +54,145 @@
       align-items: center;
       width: 100%;
       max-width: 1200px;
-      margin: 0 auto;
+    }
+
+    .nav-logo img {
+      height: 80px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
+
+    .nav-links a, .btn-login {
+      color: white;
+      font-size: 18px;
+      padding: 10px 20px;
+      border: 2px solid #31d1a4;
+      background-color: transparent;
+      border-radius: 10px;
+      position: relative;
+      overflow: hidden;
+      transition: color 0.3s ease;
+      z-index: 1;
+      text-decoration: none;
+    }
+
+    .nav-links a::before, .btn-login::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%) scaleX(0);
+      transform-origin: center;
+      width: 100%;
+      height: 100%;
+      background-color: #31d1a4;
+      z-index: -1;
+      transition: transform 0.4s ease;
+      border-radius: 10px;
+    }
+
+    .nav-links a:hover::before, .btn-login:hover::before {
+      transform: translateX(-50%) scaleX(1);
+    }
+
+    .nav-links a:hover, .btn-login:hover {
+      color: black;
+      border-color: #31d1a4;
+    }
+
+    .nav-social {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .social-text {
+      font-size: 16px;
+      margin-right: 10px;
+      color: #aaffcc;
+      font-weight: bold;
+    }
+
+    .social-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 0 6px #00ffaa;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .social-icon:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 12px #00ffaa, 0 0 24px #00ffaa;
+    }
+
+    .social-icon img {
+      width: 24px;
+      height: 24px;
+    }
+
+    .content {
+      padding-top: 100px;
     }
   </style>
 </head>
+
 <body>
-  <!-- Barra de navegación fija -->
+  <!-- Barra de navegación -->
   <nav>
     <div class="nav-container">
       <!-- Logo -->
       <div class="nav-logo">
-        <img src="<%= asset_path('logo.svg') %>" alt="Logo">
+        <img src="<%= asset_path('logolab.png') %>" alt="Logo">
       </div>
 
       <!-- Enlaces de navegación -->
       <div class="nav-links">
-        <a href="/">Inicio</a>
-        <a href="/tutoriales">Tutoriales</a>
-        <a href="/servicios">Servicios</a>
-        <% if user_signed_in? %>
-         <!-- <%= link_to "Cerrar sesión", destroy_user_session_path, method: :delete, class: "btn-login" %>-->
-          <%= link_to 'Cerrar sesión', destroy_user_session_path, method: :delete, class: 'btn btn-logout' %>
+        <%= link_to 'Inicio', root_path %>
+        <%= link_to 'Tutoriales', tutoriales_path %>
+        <%= link_to 'Servicios', servicios_path %>
 
+        <% if user_signed_in? %>
+          <%= button_to 'Cerrar sesión', destroy_user_session_path, method: :delete, data: { turbo: false }, class: 'btn-login', form: { style: 'display: inline' } %>
         <% else %>
-          <%= link_to "Ingresar", select_role_path, class: "btn-login" %>
+          <%= link_to 'Ingresar', new_user_session_path, class: 'btn-login' %>
         <% end %>
       </div>
 
       <!-- Redes sociales -->
       <div class="nav-social">
-        <img src="<%= asset_path('instagram.svg') %>" alt="Instagram">
-        <img src="<%= asset_path('facebook.svg') %>" alt="Facebook">
+        <span class="social-text">Redes sociales:</span>
+        <div class="social-icon">
+          <img src="<%= asset_path('instagram icon.png') %>" alt="Instagram">
+        </div>
+        <div class="social-icon">
+          <img src="<%= asset_path('facebook icon.png') %>" alt="Facebook">
+        </div>
+        <div class="social-icon">
+          <img src="<%= asset_path('youtube icon.png') %>" alt="Youtube">
+        </div>
       </div>
     </div>
   </nav>
 
   <!-- Contenido principal -->
-  <div style="padding-top: 100px;">
+  <div class="content">
     <%= yield %>
   </div>
+
+  <%# 🔥 SCRIPT para hacer full reload tras logout %>
+  <% if flash[:notice] == "Sesión cerrada exitosamente." %>
+    <script>
+      window.location.href = "/";
+    </script>
+  <% end %>
 </body>
 </html>

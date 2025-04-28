@@ -1,9 +1,30 @@
-<h1>New costos servicio por tipo cliente</h1>
+<h1 class="text-center text-primary mb-4">Nuevo Costo por Tipo de Cliente</h1>
 
-<%= render "form", costos_servicio_por_tipo_cliente: @costos_servicio_por_tipo_cliente %>
+<div class="container mt-4 shadow-lg p-5 bg-light rounded">
+  <%= form_with model: @costos_servicio_por_tipo_cliente, local: true do |form| %>
 
-<br>
+    <!-- Tipo de Cliente -->
+    <div class="mb-4">
+      <%= form.label :tipo_cliente_id, 'Tipo de Cliente', class: "form-label fw-bold text-dark" %>
+      <%= form.collection_select :tipo_cliente_id, TipoCliente.all, :id, :nombre, { prompt: 'Seleccione un tipo' }, class: "form-select border-primary" %>
+    </div>
 
-<div>
-  <%= link_to "Back to costos servicio por tipo clientes", costos_servicio_por_tipo_clientes_path %>
+    <!-- Servicio (por código) -->
+    <div class="mb-4">
+      <%= form.label :codigo_servicio, 'Código del Servicio', class: "form-label fw-bold text-dark" %>
+      <%= form.select :codigo_servicio, Servicio.all.map { |s| [s.nombre, s.codigo_servicio] }, { prompt: 'Seleccione un servicio' }, class: "form-select border-primary" %>
+    </div>
+
+    <!-- Costo -->
+    <div class="mb-4">
+      <%= form.label :costo, 'Costo (S/)', class: "form-label fw-bold text-dark" %>
+      <%= form.number_field :costo, step: 0.01, class: "form-control border-primary", placeholder: 'Ejemplo: 150.00' %>
+    </div>
+
+    <!-- Botones -->
+    <div class="text-center">
+      <%= form.submit 'Guardar Costo', class: "btn btn-success px-4 py-2 fw-bold" %>
+      <%= link_to 'Volver', costos_servicio_por_tipo_clientes_path, class: "btn btn-secondary px-4 py-2 fw-bold ms-3" %>
+    </div>
+  <% end %>
 </div>

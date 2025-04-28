@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Laboratorio Central de Investigación de la UNAS</title>
+  <title>CUALIADO MANUEL de Investigación de la UNAS</title>
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
   <%= javascript_include_tag 'application', 'data-turbo-track': 'reload' %>
-  <!-- Incluye la fuente Newsreader -->
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     body {
@@ -20,44 +19,87 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start;
       width: 100%;
-      min-height: 100vh; /* Cambiado a min-height */
-      padding: 20px;
+      min-height: 100vh;
+      padding: 80px 120px;
       box-sizing: border-box;
-      background-color: #ffffff; /* Fondo blanco */
+      background-image: url('<%= asset_path("portada.svg") %>');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      position: relative;
+      color: white;
+      text-align: left;
+    }
+
+    .text-block {
+      max-width: 800px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+      margin-top: 10px;
+      padding-left: 20px;
     }
 
     .title {
-      font-size: 36px;
+      font-size: 34px;
       font-weight: bold;
-      margin-bottom: 20px;
-      color: #4a4a4a;
+      color: #FFFF00;
+      margin: 0;
+      line-height: 1.2;
+      text-align: left;
+    }
+
+    .shadow-title {
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+    }
+
+    .yellow-title {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 5px 12px;
+      border-radius: 6px;
+      color: #FFFF00 !important;
+      margin-top: 2px;
+    }
+
+    .divider {
+      width: 100%;
+      max-width: 600px;
+      height: 4px;
+      background-color: #ffffff;
+      opacity: 0.8;
+      margin: 8px 0 5px 0;
     }
 
     .description {
-      font-size: 18px;
-      color: #555;
-      line-height: 1.8;
-      max-width: 80%; /* Ajusta el ancho del texto */
-      margin: 0 auto 30px auto;
+      font-size: 17px;
+      color: #f2f2f2;
+      line-height: 1.5;
+      margin: 0;
+      text-align: left;
+    }
+
+    .shadow-description {
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
     }
 
     .image-container img {
-      max-width: 805px; /* Ancho máximo de 805px */
-      max-height: 460px; /* Altura máxima de 460px */
-      width: auto; /* Ajusta el ancho según la altura */
-      height: auto; /* Ajusta la altura según el ancho */
+      max-width: 900px;
+      max-height: 600px;
+      width: auto;
+      height: auto;
     }
 
-    /* Sección de Misión y Visión */
     .mission-vision-section {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
       gap: 0;
       padding: 40px 20px;
-      background-color: #f9f9f9; /* Fondo global */
+      background-color: #f9f9f9;
     }
 
     .mission, .vision {
@@ -70,11 +112,11 @@
     }
 
     .mission {
-      background-color: #ABC198; /* Color de fondo para Misión */
+      background-color: #ABC198;
     }
 
     .vision {
-      background-color: #B8CAAD; /* Color de fondo para Visión */
+      background-color: #B8CAAD;
     }
 
     .mission h2, .vision h2 {
@@ -82,10 +124,9 @@
       font-weight: bold;
       margin-bottom: 20px;
       text-transform: uppercase;
-      color: #2d2d2d; /* Color del texto */
+      color: #2d2d2d;
     }
 
-    /* Estilos para la sección de tutoriales */
     .tutorials-section {
       padding: 40px 20px;
       background-color: #f0f8f0;
@@ -151,15 +192,25 @@
 <body>
   <!-- Componente Principal -->
   <div class="full-screen">
-    <h1 class="title">Laboratorio Central de Investigación de la UNAS</h1>
-    <p class="description">
-      Institución dedicada a la excelencia en el análisis y gestión de muestras. Nuestro laboratorio está comprometido con la calidad
-      y precisión en los servicios que ofrecemos a nuestros clientes, que incluyen tesistas, bachilleres, estudiantes, y el público
-      en general. Nos enorgullecemos de utilizar metodologías avanzadas y mantener altos estándares en todas nuestras operaciones
-      para asegurar resultados confiables y eficientes.
-    </p>
+    <div class="text-block">
+      <h1 class="title shadow-title" style="color: #FFFFFF;">Laboratorio Central de</h1>
+      <h1 class="title shadow-title yellow-title">Investigación de la UNAS</h1>
+
+      <div class="divider"></div>
+
+      <p class="description shadow-description" style="font-weight: bold; color: white;">
+        Calidad, ciencia y compromiso con la investigación.
+      </p>
+      <p class="description shadow-description">
+        Institución dedicada a la excelencia en el análisis y gestión de muestras. Nuestro laboratorio está comprometido con la calidad
+        y precisión en los servicios que ofrecemos a nuestros clientes, que incluyen tesistas, bachilleres, estudiantes, y el público
+        en general. Nos enorgullecemos de utilizar metodologías avanzadas y mantener altos estándares en todas nuestras operaciones
+        para asegurar resultados confiables y eficientes.
+      </p>
+    </div>
+
     <div class="image-container">
-      <img src="<%= asset_path('universidad.svg') %>" alt="Universidad">
+      <img src="<%= asset_path('universitario.png') %>" alt="Universidad">
     </div>
   </div>
 
@@ -185,12 +236,10 @@
   <div class="tutorials-section">
     <button class="tutorials-button">Tutoriales</button>
     <div class="tutorials-container">
-      <!-- Afiche -->
       <div class="card">
         <img src="<%= asset_path('afiche.svg') %>" alt="Afiche" class="poster">
         <button class="tutorials-button" style="margin-top: 10px;">Descarga</button>
       </div>
-      <!-- Primer video -->
       <div class="card">
         <iframe
           class="video-frame"
@@ -202,7 +251,6 @@
       </div>
     </div>
     <div class="tutorial-bottom">
-      <!-- Segundo video -->
       <iframe
         src="https://www.youtube.com/embed/2AnDrDXMnbo"
         title="Tutorial 2"
@@ -213,3 +261,5 @@
   </div>
 </body>
 </html>
+
+  

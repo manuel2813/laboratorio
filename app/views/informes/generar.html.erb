@@ -1,0 +1,37 @@
+<h1 class="text-center text-success mb-4">📄 Generar Informe</h1>
+
+<div class="container">
+  <%= form_with model: @informe, url: informes_path, local: true do |form| %>
+    <div class="mb-3">
+      <%= form.label :codigo_solicitud, "Código de Solicitud", class: "form-label fw-bold" %>
+      <%= form.text_field :codigo_solicitud, class: "form-control", placeholder: "Ej: INF-001" %>
+    </div>
+
+    <%= form.hidden_field :laboratorista_id, value: current_user.id %>
+
+    <div class="mb-3">
+      <%= form.label :gerente_id, "Seleccionar Gerente", class: "form-label fw-bold" %>
+      <%= form.collection_select :gerente_id, User.where(role: "gerente"), :id, :email, { prompt: "Selecciona un gerente" }, class: "form-select" %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :fecha_generacion, "Fecha de Generación", class: "form-label fw-bold" %>
+      <%= form.datetime_field :fecha_generacion, value: Time.zone.now, class: "form-control" %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :archivo, "Nombre del Archivo", class: "form-label fw-bold" %>
+      <%= form.text_field :archivo, class: "form-control", placeholder: "Ej: informe_lab001.pdf" %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :estado, "Estado del Informe", class: "form-label fw-bold" %>
+      <%= form.select :estado, ["Borrador", "Pendiente", "Firmado", "Enviado"], {}, class: "form-select" %>
+    </div>
+
+    <div class="text-center">
+      <%= form.submit "Generar Informe", class: "btn btn-success fw-bold px-4" %>
+      <%= link_to "← Volver", laboratorista_dashboard_path, class: "btn btn-secondary fw-bold px-4 ms-3" %>
+    </div>
+  <% end %>
+</div>

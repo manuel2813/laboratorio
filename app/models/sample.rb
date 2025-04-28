@@ -1,11 +1,10 @@
 class Sample < ApplicationRecord
-  self.table_name = "samples" # No cambia el nombre de la tabla, pero lo interpretamos como solicitudes
-
+  self.table_name = "samples"
+  
   belongs_to :laboratorista, class_name: "User", foreign_key: "laboratorista_id"
   belongs_to :user
-  belongs_to :tenant
+  belongs_to :servicio, optional: true # Nuevo campo: servicio_id
 
   validates :code, presence: true, uniqueness: true
   validates :results, presence: true
 end
-

@@ -1,10 +1,35 @@
-<p style="color: green"><%= notice %></p>
+<h1 class="text-center text-primary mb-4">📄 Ficha Detallada del Costo</h1>
 
-<%= render @costos_servicio_por_tipo_cliente %>
+<div class="container shadow-lg p-5 bg-light rounded" style="max-width: 800px; font-family: 'Segoe UI', sans-serif;">
+  <!-- Tipo de Cliente -->
+  <div class="mb-4">
+    <h5 class="fw-bold text-success">👥 Tipo de Cliente:</h5>
+    <p class="fs-5 border rounded p-2 bg-white">
+      <%= @costos_servicio_por_tipo_cliente.tipo_cliente&.nombre || "Sin definir" %>
+    </p>
+  </div>
 
-<div>
-  <%= link_to "Edit this costos servicio por tipo cliente", edit_costos_servicio_por_tipo_cliente_path(@costos_servicio_por_tipo_cliente) %> |
-  <%= link_to "Back to costos servicio por tipo clientes", costos_servicio_por_tipo_clientes_path %>
+  <!-- Servicio -->
+  <div class="mb-4">
+    <h5 class="fw-bold text-success">🔬 Servicio:</h5>
+    <p class="fs-5 border rounded p-2 bg-white">
+      <%= Servicio.find_by(codigo_servicio: @costos_servicio_por_tipo_cliente.codigo_servicio)&.nombre || @costos_servicio_por_tipo_cliente.codigo_servicio %>
+    </p>
+  </div>
 
-  <%= button_to "Destroy this costos servicio por tipo cliente", @costos_servicio_por_tipo_cliente, method: :delete %>
+  <!-- Costo -->
+  <div class="mb-4">
+    <h5 class="fw-bold text-success">💲 Costo (S/):</h5>
+    <p class="fs-5 border rounded p-2 bg-white">
+      S/ <%= number_to_currency(@costos_servicio_por_tipo_cliente.costo, unit: "", precision: 2) %>
+    </p>
+  </div>
+
+  <!-- Acciones -->
+  <div class="text-center mt-5 d-flex flex-wrap justify-content-center gap-3">
+    <%= link_to "← Volver a la Lista", costos_servicio_por_tipo_clientes_path, class: "btn btn-secondary fw-bold" %>
+    <%= link_to "✏️ Editar", edit_costos_servicio_por_tipo_cliente_path(@costos_servicio_por_tipo_cliente), class: "btn btn-warning fw-bold" %>
+    <%= link_to "🗑️ Eliminar", costos_servicio_por_tipo_cliente_path(@costos_servicio_por_tipo_cliente), method: :delete, data: { confirm: "¿Seguro que deseas eliminar este registro?" }, class: "btn btn-danger fw-bold" %>
+    <%= link_to "⬇️ Exportar a PDF", export_pdf_costos_servicio_por_tipo_cliente_path(@costos_servicio_por_tipo_cliente), class: "btn btn-success fw-bold", target: "_blank" %>
+  </div>
 </div>

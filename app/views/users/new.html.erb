@@ -23,7 +23,10 @@
 
   <!-- Formulario -->
   <%= form_with model: @user, local: true, data: { turbo: false }, class: "needs-validation" do |form| %>
-    
+    <div style="margin-top: 20px;">
+  <%= link_to "← Volver a Usuarios del Sistema", users_path, class: "btn" %>
+</div>
+
     <!-- Campo de Email -->
     <div class="mb-4">
       <%= form.label :email, 'Correo Electrónico', class: "form-label fw-bold text-dark" %>

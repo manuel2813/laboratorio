@@ -1,0 +1,42 @@
+<h1 class="text-center text-primary mb-4">🧪 Cargar o Editar Resultado</h1>
+
+<div class="container mt-4 shadow-lg p-5 bg-light rounded">
+  <div class="mb-4">
+    <strong>Código:</strong> <%= @sample.code %><br>
+    <strong>Cliente:</strong> <%= @sample.user&.email || "Sin cliente asignado" %><br>
+    <strong>Prioridad:</strong> <%= @sample.prioridad.presence || "No especificada" %>
+  </div>
+
+  <%= form_with model: @sample, url: guardar_resultado_sample_path(@sample), method: :patch, local: true do |form| %>
+
+    <!-- Resultados -->
+    <div class="mb-3">
+      <%= form.label :results, 'Resultados', class: "form-label fw-bold text-dark" %>
+      <%= form.text_area :results, rows: 6, class: "form-control border-primary", placeholder: "Escribe el resultado..." %>
+    </div>
+
+    <!-- Fecha del Resultado -->
+    <div class="mb-3">
+      <%= form.label :fecha_resultado, 'Fecha del Resultado', class: "form-label fw-bold text-dark" %>
+      <%= form.date_field :fecha_resultado, class: "form-control border-primary" %>
+    </div>
+
+    <!-- Observaciones -->
+    <div class="mb-3">
+      <%= form.label :observaciones, 'Observaciones', class: "form-label fw-bold text-dark" %>
+      <%= form.text_area :observaciones, rows: 4, class: "form-control border-primary", placeholder: "Ingresa observaciones (si aplica)..." %>
+    </div>
+
+    <!-- Estado -->
+    <div class="mb-3">
+  <%= form.label :estado, 'Estado de la Muestra', class: "form-label fw-bold text-dark" %>
+  <%= form.select :estado, [['Pendiente', 'pendiente'], ['Procesado', 'procesado']], {}, class: "form-select border-primary" %>
+</div>
+
+    <!-- Botones -->
+    <div class="text-center">
+      <%= form.submit 'Guardar Resultado', class: "btn btn-success px-4 py-2 fw-bold" %>
+      <%= link_to 'Volver a la Lista de Muestras', samples_path, class: "btn btn-secondary px-4 py-2 fw-bold ms-3" %>
+    </div>
+  <% end %>
+</div>

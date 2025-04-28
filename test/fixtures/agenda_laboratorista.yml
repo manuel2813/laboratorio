@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  laboratorista: one
+  fecha: 2025-04-20
+  hora_inicio: 2025-04-20 07:26:30
+  hora_fin: 2025-04-20 07:26:30
+  descripcion: MyString
+
+two:
+  laboratorista: two
+  fecha: 2025-04-20
+  hora_inicio: 2025-04-20 07:26:30
+  hora_fin: 2025-04-20 07:26:30
+  descripcion: MyString
