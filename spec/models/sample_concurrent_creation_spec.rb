@@ -33,7 +33,7 @@ RSpec.describe Sample, type: :model do
     errors = []
     threads = []
 
-    1000.times do |i|
+    10000.times do |i|
       threads << Thread.new do
         ActiveRecord::Base.connection_pool.with_connection do
           begin
@@ -62,6 +62,6 @@ RSpec.describe Sample, type: :model do
     puts " Errores encontrados: #{errors.count}" if errors.any?
     errors.each { |e| puts "- #{e}" }
 
-    expect(Sample.where("code LIKE ?", "UNIQ%").count).to eq(1000)
+    expect(Sample.where("code LIKE ?", "UNIQ%").count).to eq(10000)
   end
 end
