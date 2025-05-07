@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_04_28_123911) do
+ActiveRecord::Schema[7.0].define(version: 2025_05_07_101259) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -112,6 +112,8 @@ ActiveRecord::Schema[7.0].define(version: 2025_04_28_123911) do
     t.date "fecha_recepcion"
     t.string "prioridad"
     t.text "observaciones"
+    t.date "fecha_resultado"
+    t.string "estado"
     t.index ["code"], name: "index_samples_on_code", unique: true
     t.index ["laboratorista_id"], name: "index_samples_on_laboratorista_id"
     t.index ["user_id"], name: "index_samples_on_user_id"
