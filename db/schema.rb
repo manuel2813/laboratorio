@@ -70,11 +70,13 @@ ActiveRecord::Schema[7.0].define(version: 2025_04_28_123911) do
   end
 
   create_table "costos_servicio_por_tipo_clientes", force: :cascade do |t|
-    t.integer "tipo_cliente_id"
-    t.string "codigo_servicio"
-    t.float "costo"
+    t.bigint "tipo_cliente_id"
+    t.bigint "servicio_id"
+    t.decimal "costo", precision: 10, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["servicio_id"], name: "index_costos_servicio_por_tipo_clientes_on_servicio_id"
+    t.index ["tipo_cliente_id"], name: "index_costos_servicio_por_tipo_clientes_on_tipo_cliente_id"
   end
 
   create_table "informes", force: :cascade do |t|
@@ -110,8 +112,6 @@ ActiveRecord::Schema[7.0].define(version: 2025_04_28_123911) do
     t.date "fecha_recepcion"
     t.string "prioridad"
     t.text "observaciones"
-    t.date "fecha_resultado"
-    t.string "estado"
     t.index ["code"], name: "index_samples_on_code", unique: true
     t.index ["laboratorista_id"], name: "index_samples_on_laboratorista_id"
     t.index ["user_id"], name: "index_samples_on_user_id"
@@ -153,7 +153,8 @@ ActiveRecord::Schema[7.0].define(version: 2025_04_28_123911) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "compras", "servicios"
   add_foreign_key "compras", "users", column: "cliente_id"
-  add_foreign_key "samples", "servicios"
+  add_foreign_key "costos_servicio_por_tipo_clientes", "servicios"
+  add_foreign_key "costos_servicio_por_tipo_clientes", "tipo_clientes"
   add_foreign_key "samples", "users", column: "laboratorista_id", on_delete: :cascade
   add_foreign_key "samples", "users", on_delete: :cascade
 end
