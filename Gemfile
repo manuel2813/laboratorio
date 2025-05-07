@@ -36,7 +36,9 @@ group :test do
   gem "selenium-webdriver" # Driver para pruebas en navegador
   gem "webdrivers" # Automatización de drivers de navegador
 end
-
+group :development, :test do
+  gem 'rspec-rails'
+end
 # Opcionales: Librerías base de Ruby, si las necesitas específicamente
 gem "base64", "~> 0.2.0", require: false
 gem "bigdecimal", "~> 3.1", require: false

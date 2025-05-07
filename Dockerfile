@@ -17,7 +17,7 @@ RUN bundle install
 
 # Copia el resto del código fuente
 COPY . .
-
+RUN bundle install
 # Instala Rails (si aún no está incluido en las gemas)
 RUN gem install rails -v 7.0
 
