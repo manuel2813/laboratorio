@@ -1,0 +1,15 @@
+<h2>Verifica tu cuenta</h2>
+
+<%= form_with url: verificacion_path, method: :post, local: true do %>
+  <div>
+    <%= label_tag :email, "Correo electrónico" %>
+    <%= email_field_tag :email, nil, class: "form-control" %>
+  </div>
+
+  <div>
+    <%= label_tag :codigo, "Código de verificación" %>
+    <%= text_field_tag :codigo, nil, class: "form-control" %>
+  </div>
+
+  <%= submit_tag "Verificar", class: "btn btn-success mt-3" %>
+<% end %>

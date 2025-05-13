@@ -46,7 +46,7 @@ class SamplesController < ApplicationController
   def create
     @sample = Sample.new(sample_params)
     @sample.laboratorista = current_user if current_user.laboratorista?
-    @sample.user = current_user if current_user.cliente?
+    #@sample.user = current_user if current_user.cliente? para asignar el cliente
 
     if @sample.save
       redirect_to samples_path, notice: 'Muestra creada correctamente.'
@@ -170,7 +170,11 @@ class SamplesController < ApplicationController
   end
 
   def sample_params
-    params.require(:sample).permit(:code, :results, :user_id, :servicio_id, :fecha_recepcion, :fecha_resultado, :estado, :observaciones)
-  end
+  params.require(:sample).permit(
+    :code, :results, :fecha_recepcion, :fecha_resultado, :estado,
+    :observaciones, :nombre_muestra, :numero_muestras, :area_analisis,
+    :monto_pago, :recibo_caja
+  )
+end
   
 end

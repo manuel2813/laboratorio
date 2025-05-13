@@ -4,8 +4,10 @@ class AgendaLaboratoristasController < ApplicationController
 
   # GET /agenda_laboratoristas
   def index
-    @agenda_laboratoristas = AgendaLaboratorista.where(laboratorista_id: current_user.id).order(fecha: :asc, hora_inicio: :asc)
-  end
+  @agenda_laboratoristas = AgendaLaboratorista
+    .where(laboratorista_id: current_user.id)
+    .order(:fecha, :hora_inicio)
+end
 
   # GET /agenda_laboratoristas/new
   def new
@@ -40,37 +42,39 @@ class AgendaLaboratoristasController < ApplicationController
 
   # DELETE /agenda_laboratoristas/:id
   def destroy
-    @agenda.destroy
-    redirect_to agenda_laboratoristas_path, notice: "Evento eliminado correctamente."
-  end
+  @agenda = AgendaLaboratorista.find(params[:id])
+  @agenda.destroy
+
+  redirect_to agenda_laboratoristas_path, notice: "Horario eliminado correctamente."
+end
   def crear_horarios_multiples
-    dias = params[:dias] || []
-    hora_inicio = Time.parse(params[:hora_inicio])
-    hora_fin = Time.parse(params[:hora_fin])
-    duracion = params[:duracion].to_i
-    descripcion = params[:descripcion]
-  
-    horarios_creados = 0
-  
-    dias.each do |dia|
-      fecha = siguiente_fecha_para(dia)
-  
-      while hora_inicio < hora_fin
-        AgendaLaboratorista.create!(
-          laboratorista_id: current_user.id,
-          fecha: fecha,
-          hora_inicio: hora_inicio,
-          hora_fin: hora_inicio + duracion.minutes,
-          descripcion: descripcion
-        )
-        hora_inicio += duracion.minutes
-        horarios_creados += 1
-      end
+  dias = params[:dias] || []
+  hora_inicio_param = Time.parse(params[:hora_inicio])
+  hora_fin_param = Time.parse(params[:hora_fin])
+  duracion = params[:duracion].to_i
+  descripcion = params[:descripcion]
+  horarios_creados = 0
+
+  dias.each do |dia|
+    fecha = siguiente_fecha_para(dia)
+    hora_actual = Time.zone.local(fecha.year, fecha.month, fecha.day, hora_inicio_param.hour, hora_inicio_param.min)
+    hora_limite = Time.zone.local(fecha.year, fecha.month, fecha.day, hora_fin_param.hour, hora_fin_param.min)
+
+    while hora_actual < hora_limite
+      AgendaLaboratorista.create!(
+        laboratorista_id: current_user.id,
+        fecha: fecha,
+        hora_inicio: hora_actual,
+        hora_fin: hora_actual + duracion.minutes,
+        descripcion: descripcion
+      )
+      hora_actual += duracion.minutes
+      horarios_creados += 1
     end
-  
-    redirect_to agenda_laboratoristas_path, notice: "#{horarios_creados} horarios creados exitosamente."
   end
-  
+
+  redirect_to agenda_laboratoristas_path, notice: "#{horarios_creados} horarios creados exitosamente."
+end
   private
   
   def siguiente_fecha_para(dia_nombre)

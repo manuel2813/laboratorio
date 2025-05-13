@@ -18,6 +18,19 @@ class ApplicationController < ActionController::Base
   def after_sign_out_path_for(resource_or_scope)
     root_path
   end
+  def check_verification
+  if user_signed_in? &&
+     current_user.email.ends_with?('@gmail.com', '@hotmail.com', '@unas.edu.pe') &&
+     !current_user.verified? &&
+     request.path != verificacion_path &&
+     !request.xhr? && !devise_controller?
+
+    sign_out(current_user) # Previene acceso si no verifica
+    redirect_to new_user_session_path, alert: 'Debes verificar tu cuenta antes de ingresar.'
+  end
+  end
+
+
   private
 
   def set_cache_headers
@@ -25,4 +38,5 @@ class ApplicationController < ActionController::Base
     response.headers["Pragma"] = "no-cache"
     response.headers["Expires"] = "0"
   end
+  
 end

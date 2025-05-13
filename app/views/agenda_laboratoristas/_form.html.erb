@@ -1,25 +1,32 @@
-<%= form_with(model: agenda, local: true) do |form| %>
-    <div class="mb-3">
-      <%= form.label :fecha, class: "form-label fw-bold" %>
-      <%= form.date_field :fecha, class: "form-control" %>
-    </div>
-  
-    <div class="mb-3">
-      <%= form.label :hora_inicio, class: "form-label fw-bold" %>
-      <%= form.time_field :hora_inicio, class: "form-control" %>
-    </div>
-  
-    <div class="mb-3">
-      <%= form.label :hora_fin, class: "form-label fw-bold" %>
-      <%= form.time_field :hora_fin, class: "form-control" %>
-    </div>
-  
-    <div class="mb-3">
-      <%= form.label :descripcion, class: "form-label fw-bold" %>
-      <%= form.text_area :descripcion, class: "form-control", rows: 3 %>
-    </div>
-  
-    <div class="text-center">
-      <%= form.submit class: "btn btn-primary fw-bold px-4" %>
-    </div>
-  <% end %>
+<%= form_with(
+  model: agenda,
+  url: agenda.persisted? ? agenda_laboratorista_path(agenda) : agenda_laboratoristas_path,
+  method: agenda.persisted? ? :patch : :post,
+  local: true
+) do |form| %>
+
+  <div class="mb-3">
+    <%= form.label :fecha, class: "form-label fw-bold" %>
+    <%= form.date_field :fecha, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :hora_inicio, class: "form-label fw-bold" %>
+    <%= form.time_field :hora_inicio, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :hora_fin, class: "form-label fw-bold" %>
+    <%= form.time_field :hora_fin, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :descripcion, class: "form-label fw-bold" %>
+    <%= form.text_area :descripcion, class: "form-control", rows: 3 %>
+  </div>
+
+  <div class="text-center">
+    <%= form.submit agenda.persisted? ? "Actualizar" : "Crear", class: "btn btn-primary fw-bold px-4" %>
+  </div>
+
+<% end %>

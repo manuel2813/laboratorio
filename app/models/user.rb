@@ -15,7 +15,7 @@ class User < ApplicationRecord
   enum role: { cliente: 0, laboratorista: 1, admin: 2, gerente: 3 }
 
   # Devise módulos para autenticación
-  devise :database_authenticatable, :recoverable, :rememberable, :validatable
+  devise :database_authenticatable, :recoverable, :rememberable, :validatable, :registerable
 
   # Validaciones
   validates :email, presence: true, uniqueness: { case_sensitive: false, message: 'El correo ya está registrado.' }
@@ -25,9 +25,38 @@ class User < ApplicationRecord
   # Validación opcional para clientes si tienen un tipo asignado
   validates :tipo_cliente, presence: true, if: -> { cliente? }
 
+before_create :generate_verification_code
+after_create :send_verification_email
+
+VALID_EMAIL_DOMAINS = ['gmail.com', 'hotmail.com', 'unas.edu.pe']
+
+validate :email_domain_allowed
+
+def generate_verification_code
+  self.verification_code = rand(100000..999999).to_s
+  self.verified = false
+end
+
+def send_verification_email
+  return unless email_domain_allowed?
+
+  UserMailer.with(user: self).verification_email.deliver_later
+end
+
+def email_domain_allowed?
+  VALID_EMAIL_DOMAINS.any? { |d| email.ends_with?("@#{d}") }
+end
+
+def email_domain_allowed
+  unless email_domain_allowed?
+    errors.add(:email, "debe ser @gmail.com, @hotmail.com o @unas.edu.pe")
+  end
+end
+
   private
 
   def password_required?
     new_record? || password.present?
   end
+
 end

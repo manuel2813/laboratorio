@@ -25,79 +25,74 @@
   <% end %>
 
   <%= form_with model: @sample, local: true, class: "needs-validation" do |form| %>
-    <!-- Código -->
     <div class="mb-4">
       <%= form.label :code, 'Código de la Muestra', class: "form-label fw-bold text-dark" %>
       <%= form.text_field :code, class: "form-control border-primary", placeholder: 'Ejemplo: M001' %>
     </div>
 
-    <!-- Resultados -->
     <div class="mb-4">
-      <%= form.label :results, 'Resultados', class: "form-label fw-bold text-dark" %>
-      <%= form.text_area :results, class: "form-control border-primary", placeholder: 'Describe los resultados...' %>
+      <%= form.label :nombre_muestra, 'Nombre de la Muestra', class: "form-label fw-bold text-dark" %>
+      <%= form.text_area :nombre_muestra, class: "form-control border-primary", placeholder: 'Ingrese el nombre y su detalles de la muestra' %>
     </div>
 
-    <!-- Cliente -->
     <div class="mb-4">
-      <%= form.label :user_id, 'Asignar a Cliente', class: "form-label fw-bold text-dark" %>
-      <%= form.collection_select :user_id, User.where(role: :cliente), :id, :email, { prompt: 'Seleccione un cliente' }, class: "form-select border-primary" %>
+      <%= form.label :numero_muestras, 'Número de Muestras', class: "form-label fw-bold text-dark" %>
+      <%= form.number_field :numero_muestras, class: "form-control border-primary", min: 1 %>
     </div>
 
-    <!-- Servicio -->
     <div class="mb-4">
-      <%= form.label :servicio_id, 'Asignar Servicio', class: "form-label fw-bold text-dark" %>
-      <%= form.collection_select :servicio_id, Servicio.all, :id, :nombre, { prompt: 'Seleccione un servicio' }, class: "form-select border-primary" %>
+      <%= form.label :area_analisis, 'Área de Análisis', class: "form-label fw-bold text-dark" %>
+      <%= form.text_field :area_analisis, class: "form-control border-primary", placeholder: 'Ej. Suelos' %>
     </div>
 
-    <!-- Fecha de Recepción -->
+    <div class="mb-4">
+      <%= form.label :monto_pago, 'Monto Pago Realizado (S/.)', class: "form-label fw-bold text-dark" %>
+      <%= form.number_field :monto_pago, class: "form-control border-primary", step: 0.1 %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :recibo_caja, 'Recibo Caja N°', class: "form-label fw-bold text-dark" %>
+      <%= form.text_field :recibo_caja, class: "form-control border-primary" %>
+    </div>
+
     <div class="mb-4">
       <%= form.label :fecha_recepcion, 'Fecha de Recepción', class: "form-label fw-bold text-dark" %>
       <%= form.date_field :fecha_recepcion, class: "form-control border-primary" %>
     </div>
 
-    <!-- Estado -->
     <div class="mb-4">
       <%= form.label :estado, 'Estado de la Muestra', class: "form-label fw-bold text-dark" %>
       <%= form.select :estado, [['Pendiente', 'pendiente'], ['Procesado', 'procesado']], {}, class: "form-select border-primary" %>
     </div>
 
-    <!-- Fecha de Registro (estática) -->
-<div class="mb-4">
-  <label class="form-label fw-bold text-dark">Fecha de Registro</label>
-  <input type="text" class="form-control border-secondary" value="<%= @sample.created_at.strftime("%d/%m/%Y %I:%M:%S %p") %>" disabled>
-</div>
+    
 
-<!-- Última Actualización (dinámica) -->
-<div class="mb-4">
-  <label class="form-label fw-bold text-dark">Última Actualización</label>
-  <input type="text" class="form-control border-secondary" id="live-updated-at" disabled>
-</div>
-    <!-- Botones -->
-    <div class="text-center">
+    <div class="mb-4">
+      <%= label_tag 'created_at_display', 'Fecha de Registro', class: "form-label fw-bold text-dark" %>
+      <input type="text" value="<%= @sample.created_at.strftime("%d/%m/%Y %H:%M:%S") %>" class="form-control border-secondary" disabled>
+    </div>
+
+    <div class="mb-4">
+      <%= label_tag 'updated_at_display', 'Última Actualización', class: "form-label fw-bold text-dark" %>
+      <input type="text" id="live-updated-at" class="form-control border-secondary" disabled>
+    </div>
+
+    <div class="text-center mt-4">
       <%= form.submit 'Actualizar Muestra', class: "btn btn-success px-4 py-2 fw-bold" %>
       <%= link_to 'Volver a la Lista', samples_path, class: "btn btn-secondary px-4 py-2 fw-bold ms-3" %>
     </div>
   <% end %>
 </div>
+
 <script>
-  function actualizarFechaHora() {
-    const ahora = new Date();
-    const opciones = {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-      hour12: true
-    };
-    const fechaHoraFormateada = ahora.toLocaleString("es-PE", opciones);
-    document.getElementById("live-updated-at").value = fechaHoraFormateada;
+  function updateLiveTime() {
+    const now = new Date();
+    const formatted = now.toLocaleString('es-PE', {
+      day: '2-digit', month: '2-digit', year: 'numeric',
+      hour: '2-digit', minute: '2-digit', second: '2-digit'
+    });
+    document.getElementById('live-updated-at').value = formatted;
   }
-
-  // Actualiza inmediatamente al cargar
-  actualizarFechaHora();
-
-  // Luego actualiza cada segundo
-  setInterval(actualizarFechaHora, 1000);
+  setInterval(updateLiveTime, 1000);
+  updateLiveTime();
 </script>

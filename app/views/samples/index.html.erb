@@ -31,11 +31,13 @@
         <thead class="table-dark">
         <tr>
           <th>Código</th>
-          <th>Descripción</th>
-          <th>Correo del Cliente</th>
-          <th>Correo del Laboratorista</th>
-          <th>Fecha de Registro</th> <!-- NUEVO -->
-          <th>Última Actualización</th>
+          <th>Nombre de la muestra     </th>
+          <th>Cantidad</th>
+          <th>Área de análisis</th>
+          <th>Monto pagado</th>
+          <th>N° de recibo</th> <!-- NUEVO -->
+          <th>Fecha de registro</th>
+          <th>Úiltima actualización</th>
           <% if current_user.laboratorista? %>
             <th>Acciones</th>
           <% end %>
@@ -43,57 +45,61 @@
       </thead>
           
           <tbody>
-            <% @samples.each do |sample| %>
-              <tr>
-                <td><%= sample.code %></td>
-                <td><%= sample.results %></td>
-                <td><%= sample.user&.email %></td>
-                <td><%= sample.laboratorista&.email %></td>
-                <td><%= sample.created_at.strftime("%d/%m/%Y %H:%M:%S") %></td>
-                <td>
-              <% if sample.updated_at != sample.created_at %>
-              <%= sample.updated_at.strftime("%d/%m/%Y %H:%M:%S") %>
-              <% else %>
-               Sin modificar
-              <% end %>
-              </td>>
-                <% if current_user.laboratorista? %>
-                  <td class="d-flex">
-                    <%= link_to edit_sample_path(sample), class: "btn btn-primary btn-sm me-2", title: "Editar" do %>
-                      <i class="fas fa-edit"></i> Editar
-                    <% end %>
-
-                    <!-- Botón para abrir modal -->
-<button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal_<%= sample.id %>">
-  <i class="fas fa-trash"></i> Eliminar
-</button>
-
-<!-- Modal de confirmación -->
-<div class="modal fade" id="confirmDeleteModal_<%= sample.id %>" tabindex="-1" aria-labelledby="confirmDeleteModalLabel_<%= sample.id %>" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header bg-danger text-white">
-        <h5 class="modal-title" id="confirmDeleteModalLabel_<%= sample.id %>">Confirmar eliminación</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-      </div>
-      <div class="modal-body">
-        ¿Estás seguro de que deseas eliminar esta muestra?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-
-        <%= button_to sample_path(sample), method: :delete, class: "btn btn-danger", form: { class: "d-inline" } do %>
-          Confirmar
+  <% @samples.each do |sample| %>
+    <tr>
+      <td><%= sample.code %></td>
+      <td><%= sample.nombre_muestra %></td>
+      <td><%= sample.numero_muestras %></td>
+      <td><%= sample.area_analisis %></td>
+      <td><%= sample.monto_pago %></td>
+      <td><%= sample.recibo_caja.presence || "Sin registrar" %></td>
+      <td><%= sample.created_at.strftime("%d/%m/%Y %H:%M:%S") %></td>
+      <td>
+        <% if sample.updated_at != sample.created_at %>
+          <%= sample.updated_at.strftime("%d/%m/%Y %H:%M:%S") %>
+        <% else %>
+          Sin modificar
         <% end %>
-      </div>
-    </div>
-  </div>
-</div>
-                  </td>
-                <% end %>
-              </tr>
-            <% end %>
-          </tbody>
+      </td>
+      
+    
+
+      
+      <% if current_user.laboratorista? %>
+        <td class="d-flex">
+          <%= link_to edit_sample_path(sample), class: "btn btn-primary btn-sm me-2", title: "Editar" do %>
+            <i class="fas fa-edit"></i> Editar
+          <% end %>
+
+          <!-- Botón y modal de eliminación -->
+          <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal_<%= sample.id %>">
+            <i class="fas fa-trash"></i> Eliminar
+          </button>
+
+          <div class="modal fade" id="confirmDeleteModal_<%= sample.id %>" tabindex="-1" aria-labelledby="confirmDeleteModalLabel_<%= sample.id %>" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                  <h5 class="modal-title" id="confirmDeleteModalLabel_<%= sample.id %>">Confirmar eliminación</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                  ¿Estás seguro de que deseas eliminar esta muestra?
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                  <%= button_to sample_path(sample), method: :delete, class: "btn btn-danger", form: { class: "d-inline" } do %>
+                    Confirmar
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+</tbody>
         </table>
       </div>
     <% else %>

@@ -20,20 +20,30 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
-  def create
-    generated_password = params[:user][:password].presence || SecureRandom.hex(8)
-    @user = User.new(user_params.merge(password: generated_password, password_confirmation: generated_password))
+ def create
+  password_param = params[:user][:password].presence || SecureRandom.hex(8)
+  @user = User.new(user_params.merge(
+    password: password_param,
+    password_confirmation: password_param,
+    verification_code: rand(100000..999999).to_s,
+    verified: false
+  ))
 
-    if @user.save
-      send_user_created_email(@user, generated_password)  # Usar el método correcto
-      flash[:notice] = 'Usuario creado correctamente. Se ha enviado un correo al usuario.'
-      redirect_to users_path
-    else
-      flash.now[:alert] = 'Hubo un error al crear el usuario. Verifique los campos marcados.'
-      Rails.logger.debug("Errores al crear usuario: #{@user.errors.full_messages}")
-      render :new
-    end
+  if @user.save
+    send_user_created_email(@user, password_param)
+    
+    # Si es un correo válido (gmail/hotmail/unas), se le envía código de verificación
+    @user.send_verification_email if @user.email_domain_allowed?
+
+    flash[:notice] = 'Usuario creado correctamente. Se ha enviado un correo al usuario con sus credenciales y código.'
+    redirect_to users_path
+  else
+    flash.now[:alert] = 'Hubo un error al crear el usuario. Verifique los campos marcados.'
+    Rails.logger.debug("Errores al crear usuario: #{@user.errors.full_messages}")
+    render :new
   end
+end
+
 
   def edit; end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_05_07_101259) do
+ActiveRecord::Schema[7.0].define(version: 2025_05_11_205219) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -104,7 +104,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_05_07_101259) do
   create_table "samples", force: :cascade do |t|
     t.string "code", null: false
     t.text "results", null: false
-    t.bigint "user_id", null: false
+    t.bigint "user_id"
     t.bigint "laboratorista_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -114,8 +114,24 @@ ActiveRecord::Schema[7.0].define(version: 2025_05_07_101259) do
     t.text "observaciones"
     t.date "fecha_resultado"
     t.string "estado"
+    t.integer "lock_version"
+    t.string "apellidos_y_nombres"
+    t.string "institucion"
+    t.string "titulo_investigacion"
+    t.string "email_contacto"
+    t.string "telefono_contacto"
+    t.string "condicion"
+    t.string "nombre_muestra"
+    t.string "numero_muestras"
+    t.string "area_analisis"
+    t.string "analisis_solicitado"
+    t.string "monto_pago"
+    t.string "recibo_caja"
+    t.text "observacion"
+    t.bigint "solicitud_id"
     t.index ["code"], name: "index_samples_on_code", unique: true
     t.index ["laboratorista_id"], name: "index_samples_on_laboratorista_id"
+    t.index ["solicitud_id"], name: "index_samples_on_solicitud_id"
     t.index ["user_id"], name: "index_samples_on_user_id"
   end
 
@@ -128,6 +144,21 @@ ActiveRecord::Schema[7.0].define(version: 2025_05_07_101259) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "imagen"
+  end
+
+  create_table "solicituds", force: :cascade do |t|
+    t.string "apellidos_y_nombres"
+    t.string "institucion"
+    t.string "titulo_investigacion"
+    t.string "email"
+    t.string "telefono"
+    t.string "condicion"
+    t.string "codigo"
+    t.bigint "user_id", null: false
+    t.string "estado"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_solicituds_on_user_id"
   end
 
   create_table "tipo_clientes", force: :cascade do |t|
@@ -147,6 +178,8 @@ ActiveRecord::Schema[7.0].define(version: 2025_05_07_101259) do
     t.datetime "remember_created_at", precision: nil
     t.integer "role", default: 2, null: false
     t.integer "tipo_cliente_id"
+    t.string "verification_code"
+    t.boolean "verified", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -157,6 +190,8 @@ ActiveRecord::Schema[7.0].define(version: 2025_05_07_101259) do
   add_foreign_key "compras", "users", column: "cliente_id"
   add_foreign_key "costos_servicio_por_tipo_clientes", "servicios"
   add_foreign_key "costos_servicio_por_tipo_clientes", "tipo_clientes"
+  add_foreign_key "samples", "solicituds"
   add_foreign_key "samples", "users", column: "laboratorista_id", on_delete: :cascade
   add_foreign_key "samples", "users", on_delete: :cascade
+  add_foreign_key "solicituds", "users"
 end

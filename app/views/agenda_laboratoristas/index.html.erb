@@ -1,39 +1,48 @@
-<div class="container py-5 mt-8" style="margin-top: 250px;">
+<div class="container mt-5">
+  <h2 class="text-center text-primary mb-4">📋 Agenda Semanal</h2>
 
-  <h2 class="text-center text-primary mb-4" style="font-size: 2rem; font-weight: bold;">📅 Mi Agenda Laboratorista</h2>
-
-  <% horas = (0..23).map { |h| Time.parse("#{h}:00") } %>
-  <% dias = %w[Lunes Martes Miércoles Jueves Viernes] %>
-
-  <table class="table table-bordered text-center" style="table-layout: fixed;">
-    <thead class="table-secondary">
-      <tr>
-        <th style="width: 12%">Hora</th>
-        <% dias.each do |dia| %>
-          <th><%= dia %></th>
-        <% end %>
-      </tr>
-    </thead>
-    <tbody>
-      <% horas.each do |hora| %>  
-        <tr>
-          <td class="fw-bold" style="background-color: #f0f0f0"><%= hora.strftime("%H:%M") %></td>
-          <% dias.each_with_index do |dia, i| %>
-            <% fecha_dia = Date.today.beginning_of_week(:monday) + i.days %>
-            <% bloque = @agenda_laboratoristas.find { |b| b.fecha == fecha_dia && b.hora_inicio.hour == hora.hour } %>
-            <td>
-              <% if bloque %>
-                <span class="badge bg-success d-block">Disponible</span>
-                <small class="text-muted"><%= bloque.descripcion %></small>
-              <% else %>
-                <span class="badge bg-secondary d-block">No disponible</span>
+  <div class="accordion" id="agendaSemana">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingSemana">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSemana" aria-expanded="true" aria-controls="collapseSemana">
+          Ver Agenda de la Semana
+        </button>
+      </h2>
+      <div id="collapseSemana" class="accordion-collapse collapse show" aria-labelledby="headingSemana" data-bs-parent="#agendaSemana">
+        <div class="accordion-body">
+          <table class="table table-bordered table-striped text-center">
+            <thead class="table-dark">
+              <tr>
+                <th>Fecha Inicio</th>
+                <th>Fecha Fin</th>
+                <th>Hora Inicio</th>
+                <th>Hora Fin</th>
+                <th>Descripción</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% agrupados = @agenda_laboratoristas.group_by { |e| [e.descripcion, e.hora_inicio.strftime('%H:%M'), e.hora_fin.strftime('%H:%M')] } %>
+              <% agrupados.each do |(descripcion, hora_inicio, hora_fin), eventos| %>
+                <% fechas = eventos.map(&:fecha).sort %>
+                <tr>
+                  <td><%= fechas.first.strftime('%d/%m/%Y') %></td>
+                  <td><%= fechas.last.strftime('%d/%m/%Y') %></td>
+                  <td><%= hora_inicio %></td>
+                  <td><%= hora_fin %></td>
+                  <td><%= descripcion.presence || "—" %></td>
+                  <td>
+                    <%= link_to "✏️ Editar", edit_agenda_laboratorista_path(eventos.first), class: "btn btn-link text-primary" %>
+                    <%= button_to '🗑️ Eliminar', agenda_laboratorista_path(eventos.first), method: :delete, data: { confirm: '¿Estás seguro de eliminar este horario?' }, class: "btn btn-danger btn-sm" %>
+                  </td>
+                </tr>
               <% end %>
-            </td>
-          <% end %>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="text-center mt-4">
     <%= link_to "➕ Añadir Horario", new_agenda_laboratorista_path, class: "btn btn-success fw-bold" %>

@@ -14,27 +14,37 @@
     </div>
 
     <div class="mb-4">
-    <%= form.label :results, 'Descripción', class: "form-label fw-bold text-dark" %>
-    <%= form.text_area :results, class: "form-control border-primary", placeholder: 'Ingrese la descripción...' %>
+    <%= form.label :results, 'Nombre de la Muestra', class: "form-label fw-bold text-dark" %>
+    <%= form.text_area :results, class: "form-control border-primary", placeholder: ' Ingrese el nombre y su detalles de la muestra' %>
     
     </div>
-
-    <% if current_user&.laboratorista? %>
-      <div class="mb-4">
-        <%= form.label :user_id, 'Asignar a Cliente', class: "form-label fw-bold text-dark" %>
-        <%= form.collection_select :user_id, User.where(role: :cliente), :id, :email, { prompt: 'Seleccione un cliente' }, class: "form-select border-primary" %>
-      </div>
-    <% end %>
-
     <div class="mb-4">
-      <%= form.label :servicio_id, 'Asignar Servicio', class: "form-label fw-bold text-dark" %>
-      <%= form.collection_select :servicio_id, Servicio.all, :id, :nombre, { prompt: 'Seleccione un servicio' }, class: "form-select border-primary" %>
+    <%= form.label :numero_muestras, 'Número de Muestras', class: "form-label fw-bold text-dark" %>
+    <%= form.number_field :numero_muestras, class: "form-control border-primary", min: 1 %>
     </div>
 
     <div class="mb-4">
-  <%= form.label :fecha_recepcion, 'Fecha de Recepción', class: "form-label fw-bold text-dark" %>
-  <%= form.date_field :fecha_recepcion, class: "form-control border-primary" %>
+    <%= form.label :area_analisis, 'Área de Análisis', class: "form-label fw-bold text-dark" %>
+    <%= form.text_field :area_analisis, class: "form-control border-primary", placeholder: 'Ej. Suelos' %>
+    </div>  
+
+
+    
+
+    <div class="mb-4">
+  <%= form.label :monto_pago, 'Monto Pago Realizado (S/.)', class: "form-label fw-bold text-dark" %>
+  <%= form.number_field :monto_pago, class: "form-control border-primary", step: 0.1 %>
 </div>
+
+<div class="mb-4">
+  <%= form.label :recibo_caja, 'Recibo Caja N°', class: "form-label fw-bold text-dark" %>
+  <%= form.text_field :recibo_caja, class: "form-control border-primary" %>
+</div>
+
+    <div class="mb-4">
+    <%= form.label :fecha_recepcion, 'Fecha de Recepción', class: "form-label fw-bold text-dark" %>
+    <%= form.date_field :fecha_recepcion, class: "form-control border-primary" %>
+    </div>
 
     <div class="mb-4">
       <%= form.label :estado, 'Estado de la Muestra', class: "form-label fw-bold text-dark" %>
