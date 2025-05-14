@@ -18,7 +18,7 @@
       scroll-behavior: smooth;
     }
     body {
-      margin-top: 786px;
+      margin-top: 1240px;
       font-family: 'Newsreader', serif;
       background-color: #f9f9f9;
       text-align: center;
@@ -38,7 +38,7 @@
       cursor: pointer;
       margin: 0;
       position: absolute;
-      top: 590px;
+      top: 445px;
       left: 140px;
       transition: all 0.4s ease;
       box-shadow: 0 0 8px #90ee90, 0 0 16px #90ee90, 0 0 24px #90ee90; 
@@ -93,7 +93,7 @@
       flex-direction: column;
       align-items: flex-start;
       gap: 4px;
-      margin-top: 55px;
+      margin-top: -50px;
       padding-left: 20px;
     }
     .title {
@@ -248,52 +248,213 @@
   background-color: #3b7554; /* Verde más oscuro al pasar el mouse */
   transform: scale(1.05);
 }
+/* Estilos para el modal */
+.modal {
+  display: none; /* Ocultar el modal por defecto */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto; /* Habilita scroll si el contenido es largo */
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semi-transparente */
+}
 
+/* Contenido del modal */
+.modal-content {
+  background-color: #ffffff;
+  padding: 20px 30px;
+  border: 3px solid #2ecc71; /* Borde verde */
+  box-shadow: 0 0 20px rgba(46, 204, 113, 0.5);
+  width: 80%;
+  max-width: 600px;
+  margin: 80px auto 40px auto; /* Más centrado verticalmente */
+  border-radius: 12px;
+  text-align: center; /* Centra el contenido */
+}
+/* Imagen miniatura más pequeña y rectangular */
+.modal-thumbnail {
+  width: 320px;        /* ancho fijo */
+  height: 180px;       /* alto más pequeño para hacerla rectangular */
+  object-fit: cover;   /* asegura que la imagen llene bien el espacio sin deformarse */
+  border: 3px solid #2ecc71;
+  border-radius: 8px;
+  margin: 20px auto;
+  display: block;
+}
 
-    /* FOOTER */
-    footer {
-      background-color: #111;
-      color: #fff;
-      padding: 40px 20px;
-      font-size: 16px;
-      text-align: center;
-    }
-    footer .footer-content {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    footer .footer-logo {
-      font-size: 24px;
-      font-weight: bold;
-      margin-bottom: 20px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-    }
-    footer .footer-text {
-      margin-bottom: 20px;
-      font-size: 15px;
-      color: #ccc;
-    }
-    footer .social-icons {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 20px;
-    }
-    footer .social-icons a {
-      color: #fff;
-      font-size: 24px;
-      transition: color 0.3s ease;
-    }
-    footer .social-icons a:hover {
-      color: #39FF14;
-    }
-    footer .copyright {
-      margin-top: 30px;
-      font-size: 14px;
-      color: #777;
-    }
-  </style>
+/* Botón de cierre */
+.close {
+  color: #888;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+}
+
+/* footer principal*/
+footer {
+  background-color: #111;
+  color: #fff;
+  width: 100%;
+  font-size: 14px;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 40px; /* 40px arriba/abajo y 40px a los lados */
+}
+
+.footer-logo {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.footer-text {
+  margin-bottom: 20px;
+  font-size: 13px;
+  color: #ccc;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.social-icons a {
+  color: #fff;
+  font-size: 20px;
+  transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: #39FF14;
+}
+
+copyright {
+  margin-top: 30px;
+  font-size: 12px;
+  color: #777;
+}
+
+  <style>
+/* Fuente y neón */
+#servicios {
+  font-family: 'Orbitron', sans-serif;
+}
+
+#servicios h3,
+#servicios p {
+  color: #39ff14;
+  text-shadow: 0 0 5px #39ff14;
+}
+
+/* Imagen 16:9 más pequeña */
+.image-wrapper {
+  position: relative;
+  width: 80%;
+  padding-top: 45%; /* Aproximadamente 16:9 pero más pequeña */
+  margin: 0 auto 20px;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 0 15px #39ff14, 0 0 30px #39ff14;
+}
+
+.carousel-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: perspective(1000px) rotateY(5deg);
+  transition: transform 0.5s ease;
+  border-radius: 15px;
+}
+
+.carousel-img:hover {
+  transform: perspective(1000px) rotateY(0deg) scale(1.05);
+}
+
+/* Neon Box */
+.neon-box {
+  min-width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  padding: 30px;
+  border: 2px solid #39ff14;
+  border-radius: 15px;
+  background-color: rgba(0, 0, 0, 0.7);
+  box-shadow: 0 0 15px #39ff14, 0 0 30px #39ff14 inset;
+  transition: transform 0.4s ease;
+}
+
+.neon-box:hover {
+  transform: scale(1.02) rotateY(1.5deg);
+}
+
+/* Botón Neón */
+.btn-vermas {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 25px;
+  background: #000;
+  color: #39ff14;
+  border: 2px solid #39ff14;
+  border-radius: 10px;
+  text-decoration: none;
+  box-shadow: 0 0 10px #39ff14, 0 0 20px #39ff14 inset;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.btn-vermas:hover {
+  background: #39ff14;
+  color: #000;
+  transform: scale(1.1);
+}
+
+/* Flechas */
+.arrow-btn {
+  position: absolute;
+  top: 45%;
+  transform: translateY(-50%);
+  background-color: rgba(0,0,0,0.6);
+  color: #39ff14;
+  border: 2px solid #39ff14;
+  font-size: 30px;
+  cursor: pointer;
+  padding: 10px 15px;
+  border-radius: 50%;
+  z-index: 2;
+  box-shadow: 0 0 10px #39ff14, 0 0 20px #39ff14 inset;
+  transition: transform 0.2s;
+}
+
+.arrow-btn:hover {
+  transform: translateY(-50%) scale(1.1);
+}
+
+.left-arrow {
+  left: -30px;
+}
+
+.right-arrow {
+  right: -30px;
+}
+</style>
 </head>
 
 <body>
@@ -316,7 +477,7 @@
       </p>
 
       <p class="description shadow-description">
-      Institución dedicada a la excelencia en el análisis y gestión de muestras. Nuestro laboratorio está comprometido con la calidad
+      Labotorio dedicada a la excelencia en el análisis y gestión de muestras. Nuestro laboratorio está comprometido con la calidad
       y precisión en los servicios que ofrecemos a nuestros clientes, que incluyen tesistas, bachilleres, estudiantes, y el público
       en general.
     </p>
@@ -364,72 +525,257 @@
   </div>
 
   <!-- TUTORIALES -->
-<div id="tutoriales" class="tutorials-section" style="background: url('<%= asset_path('tutorialesfondo.jpg') %>') no-repeat center center/cover;">
-<h2 style="font-size: 36px; color: #ffffff; margin-bottom: 30px; text-shadow: 2px 2px 5px rgba(0,0,0,0.7);">
-Tutoriales
-</h2>
-  <div class="tutorials-container">
-
-    <!-- Card 1 -->
-    <div class="card">
-      <img src="<%= asset_path('afiche.svg') %>" alt="Afiche" class="poster">
-      <h3>Guía de Uso</h3>
-      <button class="tutorials-button">Ver Más</button>
+  <div id="tutoriales" class="tutorials-section" style="background: url('<%= asset_path('fondotutoriales.svg') %>') no-repeat center center/cover;">
+    <h2 style="font-size: 36px; color: #ffffff; margin-bottom: 30px; text-shadow: 2px 2px 5px rgba(0,0,0,0.7);">
+      Tutoriales
+    </h2>
+    <div class="tutorials-container">
+      <!-- Card 1 -->
+      <div class="card">
+        <img src="<%= asset_path('afiche.svg') %>" alt="Afiche" class="poster">
+        <h3>Guía de Uso</h3>
+        <button class="tutorials-button" data-modal="modal1">Más Detalles</button>
+      </div>
+  
+      <!-- Card 2 -->
+      <div class="card">
+        <iframe class="video-frame" src="https://www.youtube.com/embed/ZKToTjrh6gA" title="Tutorial Video 1"></iframe>
+        <h3>Introducción</h3>
+        <button class="tutorials-button" data-modal="modal2">Más Detalles</button>
+      </div>
+  
+      <!-- Card 3 -->
+      <div class="card">
+        <iframe class="video-frame" src="https://www.youtube.com/embed/-JytCLOF88M" title="Preparación de muestras"></iframe>
+        <h3>Preparación de muestras</h3>
+        <button class="tutorials-button" data-modal="modal3">Más Detalles</button>
+      </div>
+  
+      <!-- Card 4 -->
+      <div class="card">
+        <iframe class="video-frame" src="https://www.youtube.com/embed/43Vzs63CG00" title="Análisis de resultados"></iframe>
+        <h3>Análisis de resultados</h3>
+        <button class="tutorials-button" data-modal="modal4">Más Detalles</button>
+      </div>
+  
+      <!-- Card 5 -->
+      <div class="card">
+        <iframe class="video-frame" src="https://www.youtube.com/embed/3dCwvoW9Qh8" title="Normativas de calidad"></iframe>
+        <h3>Normativas de calidad</h3>
+        <button class="tutorials-button" data-modal="modal5">Más Detalles</button>
+      </div>
+  
+      <!-- Card 6 -->
+      <div class="card">
+        <iframe class="video-frame" src="https://www.youtube.com/embed/wNPCSPHYYkU" title="Buenas prácticas en el laboratorio"></iframe>
+        <h3>Buenas prácticas en laboratorio</h3>
+        <button class="tutorials-button" data-modal="modal6">Más Detalles</button>
+      </div>
     </div>
+  </div>
+  
+  <!-- Modal 1 - Guía de Uso -->
+  <!-- Modal 1 -->
+  <div id="modal1" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h3>Análisis de Calidad del Agua</h3>
+    <img src="https://img.youtube.com/vi/yQzhkDiXsVo/hqdefault.jpg" alt="Miniatura Análisis de Calidad del Agua" class="modal-thumbnail">
+    <p>Este tutorial te guiará a través de los pasos esenciales para analizar la calidad del agua, desde la medición del pH hasta la detección de contaminantes comunes. Ideal para principiantes y profesionales que desean profundizar en el tema.</p>
+    <p>Explorarás las técnicas de recolección de muestras, el uso de kits de prueba y cómo interpretar los resultados obtenidos. Asegúrate de seguir cada paso para garantizar mediciones precisas.</p>
+    <p>Al finalizar, podrás realizar análisis completos del agua y comprender su composición para tomar decisiones informadas sobre su potabilidad.</p>
+  </div>
+</div>
 
-    <!-- Card 2 -->
-    <div class="card">
-      <iframe class="video-frame" src="https://www.youtube.com/embed/EO-DwfAp3rI" title="Tutorial Video 1"></iframe>
-      <h3>Introducción</h3>
-      <button class="tutorials-button">Ver Más</button>
-    </div>
+<div id="modal2" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h3>Preparación de Soluciones Químicas</h3>
+    <img src="https://img.youtube.com/vi/ZKToTjrh6gA/hqdefault.jpg" alt="Miniatura Preparación de Soluciones Químicas" class="modal-thumbnail">
+    <p>Este tutorial te enseñará cómo preparar soluciones con la concentración exacta para tus experimentos. Es fundamental conocer las técnicas de dilución y las fórmulas utilizadas en la química práctica.</p>
+    <p>Aprenderás a pesar, medir y mezclar productos químicos de manera segura, así como a calcular las concentraciones de las soluciones. Cada detalle es importante para evitar errores durante los experimentos.</p>
+    <p>Al finalizar, tendrás las habilidades para preparar soluciones con precisión, lo que garantizará la exactitud en todos tus experimentos químicos.</p>
+  </div>
+</div>
 
-    <!-- NUEVO Card 3 -->
-    <div class="card">
-      <iframe class="video-frame" src="https://www.youtube.com/embed/Yyezse6KGE4" title="Preparación de muestras"></iframe>
-      <h3>Preparación de muestras</h3>
-      <button class="tutorials-button">Más Detalles</button>
-    </div>
+<div id="modal3" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h3>Cultivo Celular Básico</h3>
+    <img src="https://img.youtube.com/vi/-JytCLOF88M/hqdefault.jpg" alt="Miniatura Cultivo Celular Básico" class="modal-thumbnail">
+    <p>Este tutorial te introducirá en el mundo del cultivo celular, una habilidad esencial para la biología y la investigación médica. Desde la selección del medio adecuado hasta el manejo correcto de las células en cultivo.</p>
+    <p>Explorarás cómo preparar y mantener un entorno adecuado para el crecimiento celular. También aprenderás las mejores prácticas para la recolección y observación de las células bajo el microscopio.</p>
+    <p>Al finalizar, podrás cultivar células con confianza y utilizarlas para diversas aplicaciones científicas.</p>
+  </div>
+</div>
 
-    <!-- NUEVO Card 4 -->
-    <div class="card">
-      <iframe class="video-frame" src="https://www.youtube.com/embed/43Vzs63CG00" title="Análisis de resultados"></iframe>
-      <h3>Análisis de resultados</h3>
-      <button class="tutorials-button">Más Detalles</button>
-    </div>
+<div id="modal4" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h3>Separación de Mezclas Sólidas</h3>
+    <img src="https://img.youtube.com/vi/43Vzs63CG00/hqdefault.jpg" alt="Miniatura Separación de Mezclas Sólidas" class="modal-thumbnail">
+    <p>Este tutorial te enseñará las técnicas más comunes para separar mezclas sólidas, como la filtración y la cromatografía. Son procedimientos esenciales en la química de laboratorio.</p>
+    <p>Verás cómo aplicar estas técnicas para separar componentes de una mezcla de manera eficiente. Se incluirán consejos prácticos para evitar errores y mejorar la calidad de las separaciones.</p>
+    <p>Al finalizar, dominarás la separación de sólidos y podrás aplicar estos métodos en experimentos de química analítica.</p>
+  </div>
+</div>
 
-    <!-- NUEVO Card 5 -->
-    <div class="card">
-      <iframe class="video-frame" src="https://www.youtube.com/embed/9J7lEd1AaTk" title="Normativas de calidad"></iframe>
-      <h3>Normativas de calidad</h3>
-      <button class="tutorials-button">Más Detalles</button>
-    </div>
-    <!-- NUEVA Card 6 -->
-    <div class="card">
-      <iframe class="video-frame" src="https://www.youtube.com/embed/5mgBa2pMc4w" title="Buenas prácticas en el laboratorio"></iframe>
-      <h3>Buenas prácticas en laboratorio</h3>
-      <button class="tutorials-button">Ver Más</button>
-    </div>
+<div id="modal5" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h3>Identificación de Microorganismos</h3>
+    <img src="https://img.youtube.com/vi/3dCwvoW9Qh8/hqdefault.jpg" alt="Miniatura Identificación de Microorganismos" class="modal-thumbnail">
+    <p>Este tutorial te guiará en el proceso de identificación de microorganismos usando técnicas básicas de microbiología, como la tinción de Gram y el uso de cultivos selectivos.</p>
+    <p>Aprenderás a preparar muestras, realizar las tinciones adecuadas y examinar los resultados bajo el microscopio. También explorarás cómo utilizar cultivos para aislar y caracterizar diferentes microorganismos.</p>
+    <p>Al finalizar, tendrás las habilidades para identificar con precisión bacterias y otros microorganismos, un paso clave en la microbiología aplicada.</p>
+  </div>
+</div>
 
+<div id="modal6" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h3>Desinfección y Esterilización</h3>
+    <img src="https://img.youtube.com/vi/wNPCSPHYYkU/hqdefault.jpg" alt="Miniatura Desinfección y Esterilización" class="modal-thumbnail">
+    <p>Este tutorial te enseñará las mejores prácticas de desinfección y esterilización en el laboratorio, fundamentales para mantener un ambiente libre de contaminantes y garantizar la seguridad durante los experimentos.</p>
+    <p>Aprenderás cómo utilizar productos desinfectantes y autoclaves, así como las diferencias entre desinfección y esterilización. Este conocimiento es esencial para evitar la contaminación cruzada.</p>
+    <p>Al finalizar, podrás implementar procedimientos de esterilización adecuados y garantizar la seguridad y calidad en todos tus experimentos de laboratorio.</p>
   </div>
 </div>
 
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-content">
-      <div class="footer-logo">Laboratorio Central UNAS</div>
-      <div class="footer-text">Comprometidos con la excelencia científica y tecnológica.</div>
-      <div class="social-icons">
-        <a href="#"><i class="fab fa-facebook-f"></i></a>
-        <a href="#"><i class="fab fa-instagram"></i></a>
-        <a href="#"><i class="fab fa-youtube"></i></a>
-      </div>
-      <div class="copyright">
-        &copy; <%= Time.current.year %> Laboratorio Central de Investigación - UNAS.
-      </div>
-    </div>
-  </footer>
+  <script>
+// Obtener todos los botones de "Ver Más" o "Más Detalles"
+const modalButtons = document.querySelectorAll('.tutorials-button');
+
+// Obtener todos los modales
+const modals = document.querySelectorAll('.modal');
+
+// Obtener los botones de cierre de cada modal
+const closeButtons = document.querySelectorAll('.close');
+
+// Función para abrir el modal
+modalButtons.forEach((button) => {
+  button.addEventListener('click', () => {
+    const modalId = button.getAttribute('data-modal');
+    const modal = document.getElementById(modalId);
+    modal.style.display = "block";  // Mostrar el modal correspondiente
+  });
+});
+
+// Función para cerrar el modal
+closeButtons.forEach((button) => {
+  button.addEventListener('click', () => {
+    button.closest('.modal').style.display = "none";  // Cerrar el modal
+  });
+});
+
+// Cerrar el modal si el usuario hace clic fuera de él
+modals.forEach((modal) => {
+  modal.addEventListener('click', (event) => {
+    if (event.target === modal) {
+      modal.style.display = "none";  // Cerrar modal si clic en el fondo
+    }
+  });
+});
+</script>
+<!-- SECCIÓN DE SERVICIOS -->
+<div id="servicios" class="services-section" style="padding: 50px 20px; background: #000;">
+  <h2 style="font-size: 36px; text-align: center; margin-bottom: 40px; color: #39ff14; text-shadow: 0 0 10px #39ff14;">Nuestros Servicios</h2>
+
+  <div class="carousel-wrapper" style="position: relative; max-width: 900px; margin: 0 auto;">
+    <!-- Flechas -->
+    <button id="prevBtn" class="arrow-btn left-arrow">&#10094;</button>
+    <button id="nextBtn" class="arrow-btn right-arrow">&#10095;</button>
+
+    <div class="carousel-container" style="overflow: hidden;">
+      <div class="carousel" style="display: flex; transition: transform 0.6s ease-in-out;">
+
+        <!-- Servicio 1 -->
+        <div class="carousel-item neon-box">
+          <div class="image-wrapper">
+            <img src="<%= asset_path('1.jpg') %>" alt="Servicio 1" class="carousel-img">
+          </div>
+          <h3>Servicio 1</h3>
+          <p>Descripción corta del servicio 1.</p>
+          <a href="#" class="btn-vermas">Ver más</a>
+        </div>
+
+        <!-- Servicio 2 -->
+        <div class="carousel-item neon-box">
+          <div class="image-wrapper">
+            <img src="<%= asset_path('2.jpg') %>" alt="Servicio 2" class="carousel-img">
+          </div>
+          <h3>Servicio 2</h3>
+          <p>Descripción corta del servicio 2.</p>
+          <a href="#" class="btn-vermas">Ver más</a>
+        </div>
+
+        <!-- Servicio 3 -->
+        <div class="carousel-item neon-box">
+          <div class="image-wrapper">
+            <img src="<%= asset_path('3.jpg') %>" alt="Servicio 3" class="carousel-img">
+          </div>
+          <h3>Servicio 3</h3>
+          <p>Descripción corta del servicio 3.</p>
+          <a href="#" class="btn-vermas">Ver más</a>
+        </div>
+
+        <!-- Servicio 4 -->
+        <div class="carousel-item neon-box">
+          <div class="image-wrapper">
+            <img src="<%= asset_path('4.jpg') %>" alt="Servicio 4" class="carousel-img">
+          </div>
+          <h3>Servicio 4</h3>
+          <p>Descripción corta del servicio 4.</p>
+          <a href="#" class="btn-vermas">Ver más</a>
+        </div>
+  </div>
+</div>
+
+<script>
+// Carousel auto y flechas
+let currentIndex = 0;
+const items = document.querySelectorAll('#servicios .carousel-item');
+const totalItems = items.length;
+const carousel = document.querySelector('#servicios .carousel');
+
+function updateCarousel() {
+  carousel.style.transform = translateX(-${currentIndex * 100}%);
+}
+
+function showNextItem() {
+  currentIndex = (currentIndex + 1) % totalItems;
+  updateCarousel();
+}
+
+function showPrevItem() {
+  currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+  updateCarousel();
+}
+
+document.getElementById('nextBtn').addEventListener('click', showNextItem);
+document.getElementById('prevBtn').addEventListener('click', showPrevItem);
+
+// Auto avance cada 5s
+setInterval(showNextItem, 5000);
+</script>
+
+<!-- Fuente Neón -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
 
 </body>
-</html>
+</html> 
+<footer>
+  <div class="footer-content">
+    <div class="footer-logo">Laboratorio Central UNAS</div>
+    <div class="footer-text">Comprometidos con la excelencia científica y tecnológica.</div>
+    <div class="social-icons">
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-youtube"></i></a>
+    </div>
+    <div class="copyright">
+      &copy; <%= Time.current.year %> Laboratorio Central de Investigación - UNAS.
+    </div>
+  </div> <!-- Aquí estaba faltando el cierre -->
+</footer>

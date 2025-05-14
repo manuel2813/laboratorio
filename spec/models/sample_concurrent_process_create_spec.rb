@@ -2,7 +2,7 @@
 require 'rails_helper'
 
 RSpec.describe Sample, type: :model do
-  it "procesa y registra muestras simultáneamente sin errores de concurrencia (100 cada uno)" do
+  it "procesa y registra muestras simultáneamente sin errores de concurrencia (1000 cada uno)" do
     # Cliente con tipo
     cliente = User.find_or_create_by!(email: "cliente_proc@test.com") do |u|
       u.password = "123456"
@@ -36,8 +36,8 @@ RSpec.describe Sample, type: :model do
       servicio.save!
     end
 
-    # Crear 100 muestras iniciales
-    processed_ids = 100.times.map do |i|
+    # Crear 1000 muestras iniciales
+    processed_ids = 1000.times.map do |i|
       Sample.create!(
         code: "PROC#{i}",
         results: "Pendiente",
@@ -69,7 +69,7 @@ RSpec.describe Sample, type: :model do
     end
 
     # Threads para registrar nuevas muestras
-    100.times do |i|
+    1000.times do |i|
       threads << Thread.new do
         ActiveRecord::Base.connection_pool.with_connection do
           begin
@@ -94,12 +94,12 @@ RSpec.describe Sample, type: :model do
     # Esperar a que todos los hilos terminen
     threads.each(&:join)
 
-    puts "\n Total actualizaciones esperadas: 100"
-    puts " Total nuevos registros esperados: 100"
+    puts "\n Total actualizaciones esperadas: 1000"
+    puts " Total nuevos registros esperados: 1000"
     puts " Errores encontrados: #{errors.count}" if errors.any?
     errors.each { |e| puts "- #{e}" }
 
-    expect(Sample.where("code LIKE ?", "PROC%").where(results: "Resultado actualizado").count).to eq(100)
-    expect(Sample.where("code LIKE ?", "NUEVO%").count).to eq(100)
+    expect(Sample.where("code LIKE ?", "PROC%").where(results: "Resultado actualizado").count).to eq(1000)
+    expect(Sample.where("code LIKE ?", "NUEVO%").count).to eq(1000)
   end
 end
